@@ -9,22 +9,29 @@ private:
 	// atributos
 	string nombre; 
 	string genero;
-	string clasificacion;
-	string horaPresentacion;
+	string tipo;
+	string dimension;
+	string sala;
+	short tipoPublico;
+
 public:
 	//constructor por defecto
 	Pelicula() { 
 		nombre = " ";
 		genero = " ";
-		clasificacion = " ";
-		horaPresentacion = " ";
+		tipo = " ";
+		dimension = " ";
+		sala = " ";
+		tipoPublico = 0;
 	
 	}
-	Pelicula(string pNom, string pGenero, string pClasi, string pHora) { // constructor con parametros
+	Pelicula(string pNom, string pGenero, string pClasi, string pDimen, string pSala, short pTipo ) { // constructor con parametros
 		nombre = pNom;
 		genero = pGenero;
-		clasificacion = pClasi;
-		horaPresentacion = pHora;
+		tipo = pClasi;
+		dimension = pDimen;
+		sala = pSala;
+		tipoPublico = pTipo;
 	}
 	~Pelicula() {
 		
@@ -36,12 +43,12 @@ public:
 	void setGenero(string pGenero) {
 		genero = pGenero;
 	}
-	void setClasi(string pClasi) {
+	void setTipo(string pClasi) {
 		clasificacion = pClasi;
 	
 	}
-	void setHora(string pHora) {
-		horaPresentacion = pHora;
+	void setDimension(string pDimen) {
+		dimension = pDimen;
 
 	}
 	//metodos get
@@ -76,45 +83,43 @@ public:
 // CREACION DE LA CLASE CARTELERA PARA PODER MOSTRAR LAS PELICULAS
 class Cartelera {
 private:
-	Pelicula *vector; // este vector tendra las listas de las peliculas;
-	short tamano;
-	short cantidad;
+	Pelicula ***matriz; // este vector tendra las listas de las peliculas;
+	short filas;
+	short columnas;
 public:
 
 	Cartelera(short pTamano) {
-		tamano = pTamano;
-		cantidad = 0;
-		vector = new Pelicula[tamano];
+		filas = 40;
+		collate40;
+		
+		matriz = new short**[filas]; // reservando memoria para filas
+		for (short i = 0; i < fila; i++)
+			matriz[i] = new short*[columnas];// reservando memoria para columnas
 		
 	}
 	~Cartelera() {
-		delete[]vector; // se borra la lista
-	
+		
 	}
 
 	bool insertar(Pelicula); // funcion para insertar los objetos a la lista
 	string toString(); //mostramos los objetos mediante el toString
+	void comprar();
 	void buscar(short); // funcin para buscar
 
 };
 
 bool Cartelera::insertar(Pelicula pObj){
-	if (cantidad < tamano) {
-		vector[cantidad] = pObj;
-		cantidad++;
-		return true;
+	if (){
 	
 	}
-	else
-		return false;
+	else {
+	}
+		
 	
 }
 string Cartelera::toString() {
 	stringstream m;
-	for (short i = 0; i < cantidad; i++) {
-		m << vector[i].toString()<< endl;
-	}
-	return m.str();
+	
 
 }
 
@@ -159,8 +164,35 @@ void Cartelera::buscar(short pbusqueda) {
 }
 
 class Sala {
+private:
+	string sala1[][];
+	string sala2[][];
+	short filas;
+	short columnas;
 
-
-
+public:
+	Sala() {
+		filas = 6;
+		columnas = 10;
+		
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; i++) {
+				sala1[filas][columnas] = "V";
+			}
+		}
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				sala2[filas][columnas] = "V";
+			}
+		}
+	}
+	~Sala() {
+	
+	}
+	void mostarSala1();
+	void mostarSla2()
+	void selecionarAsietos1();
+	void selecionarAsietos2();
+	
 
 };
