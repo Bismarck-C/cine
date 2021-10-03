@@ -3,128 +3,42 @@
 #include <sstream>
 using namespace std;
 
-// creacion de clase para crear objetos de tipo pelicula
-class Pelicula {
-private:
-	// atributos
-	string nombre; 
-	string genero;
-	string tipo;
-	string dimension;
-	string sala;
-	short tipoPublico;
 
-public:
-	//constructor por defecto
-	Pelicula() { 
-		nombre = " ";
-		genero = " ";
-		tipo = " ";
-		dimension = " ";
-		sala = " ";
-		tipoPublico = 0;
-	
-	}
-	Pelicula(string pNom, string pGenero, string pClasi, string pDimen, string pSala, short pTipo ) { // constructor con parametros
-		nombre = pNom;
-		genero = pGenero;
-		tipo = pClasi;
-		dimension = pDimen;
-		sala = pSala;
-		tipoPublico = pTipo;
-	}
-	~Pelicula() {
-		
-	}
-	//metodos set
-	void setNombre(string pNom) {
-		nombre = pNom;
-	}
-	void setGenero(string pGenero) {
-		genero = pGenero;
-	}
-	void setTipo(string pClasi) {
-		clasificacion = pClasi;
-	
-	}
-	void setDimension(string pDimen) {
-		dimension = pDimen;
 
-	}
-	//metodos get
-	string getNombre() {
-		return nombre;
-	}
-	string getGenero() {
-		return genero;
-	}
-	string getClasi() {
-		return clasificacion;
-	}
-	string getHora() {
-		return horaPresentacion;
-	}
-	string toString() {
-		stringstream s;
-		s << "********************************************" << endl;
-		s << "\n Nombre: "<< this -> nombre;
-		s << "\n Genero: " << this -> genero;
-		s << "\n clasificacion" << this ->  clasificacion;
-		s << "\n Hora de funcion" << this->horaPresentacion;
-		s << "*********************************************" << endl;
-		
-		return s.str();
-	}
-
-	
-
-};
 
 // CREACION DE LA CLASE CARTELERA PARA PODER MOSTRAR LAS PELICULAS
-class Cartelera {
+class Funciones {
 private:
-	Pelicula ***matriz; // este vector tendra las listas de las peliculas;
-	short filas;
-	short columnas;
+	Pelicula *objPeli;
+	string dia;
+	string hora;
+	string funcion;
 public:
 
-	Cartelera(short pTamano) {
-		filas = 40;
-		collate40;
-		
-		matriz = new short**[filas]; // reservando memoria para filas
-		for (short i = 0; i < fila; i++)
-			matriz[i] = new short*[columnas];// reservando memoria para columnas
+	Funciones() {
+		objPeli = NULL;
+		dia = "";
+		hora = "DD/MM/AA";
+		funcion = "manana";
+	}
+	~Funciones() {
 		
 	}
-	~Cartelera() {
-		
-	}
-
-	bool insertar(Pelicula); // funcion para insertar los objetos a la lista
 	string toString(); //mostramos los objetos mediante el toString
 	void comprar();
 	void buscar(short); // funcin para buscar
 
 };
 
-bool Cartelera::insertar(Pelicula pObj){
-	if (){
-	
-	}
-	else {
-	}
-		
-	
 }
-string Cartelera::toString() {
+string Funciones::toString() {
 	stringstream m;
 	
 
 }
 
 // se recibe una opcion desde el main para saber porque filtro quiere buscar la pelicula;
-void Cartelera::buscar(short pbusqueda) {
+void Funciones::buscar(short pbusqueda) {
 	string busqueda = "";
 	string bandera = "f";
 	switch (pbusqueda){
@@ -162,6 +76,88 @@ void Cartelera::buscar(short pbusqueda) {
 
 
 }
+
+
+class Pelicula { // creacion de clase para crear objetos de tipo pelicula
+private:
+	// atributos
+	string nombre;
+	string genero;
+	string tipo;
+	string dimension;
+	short tipoPublico;
+
+public:
+	//constructor por defecto
+	Pelicula() {
+		nombre = " ";
+		genero = " ";
+		tipo = " ";
+		dimension = " ";
+		tipoPublico = 0;
+
+	}
+	Pelicula(string pNom, string pGenero, string pClasi, string pDimen, short pTipo) { // constructor con parametros
+		nombre = pNom;
+		genero = pGenero;
+		tipo = pClasi;
+		dimension = pDimen;
+		tipoPublico = pTipo;
+	}
+	~Pelicula() {
+
+	}
+	//metodos set
+	void setNombre(string pNom) {
+		nombre = pNom;
+	}
+	void setGenero(string pGenero) {
+		genero = pGenero;
+	}
+	void setTipo(string pClasi) {
+		clasificacion = pClasi;
+
+	}
+	void setDimension(string pDimen) {
+		dimension = pDimen;
+
+	}
+	void setTipoPublico(short pTipoP) {
+		tipoPublico = pTipoP
+	}
+	//metodos get
+	string getNombre() {
+		return nombre;
+	}
+	string getGenero() {
+		return genero;
+	}
+	string getTipo() {
+		return tipo;
+	}
+	strign getDimension() {
+		return dimension;
+	}
+	short setTipoPublico() {
+		return tipoPublico
+	}
+
+	string toString() {
+		stringstream s;
+		s << "********************************************" << endl;
+		s << "\n Nombre: " << this->nombre;
+		s << "\n Genero: " << this->genero;
+		s << "\n clasificacion" << this->clasificacion;
+		s << "\n Dimension: " << this->dimension;
+		s << "\n Publico: " << this->tipoPublico;
+		s << "*********************************************" << endl;
+
+		return s.str();
+	}
+
+
+
+};
 
 class Sala {
 private:
