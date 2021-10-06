@@ -8,7 +8,7 @@ int main() {
 	{
 		system("cls");
 		cout << "_____Menu de opciones:_____" << endl;
-		cout << "1. Insertar Sala" << endl;
+		cout << "1. Insertar Sala." << endl;
 		cout << "2. Insertar Funcion-Pelicula" << endl;
 		cout << "3. Mostrar" << endl;
 		cout << "4. Generar Tiquete" << endl;
