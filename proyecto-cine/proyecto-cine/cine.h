@@ -9,7 +9,7 @@ using namespace std;
 // CREACION DE LA CLASE CARTELERA PARA PODER MOSTRAR LAS PELICULAS
 class Funciones {
 private:
-	Pelicula *objPeli;
+	Pelicula* objPeli;
 	string dia;
 	string hora;
 	string funcion;
@@ -22,7 +22,7 @@ public:
 		funcion = "manana";
 	}
 	~Funciones() {
-		
+
 	}
 	string toString(); //mostramos los objetos mediante el toString
 	void comprar();
@@ -33,7 +33,7 @@ public:
 }
 string Funciones::toString() {
 	stringstream m;
-	
+
 
 }
 
@@ -41,13 +41,13 @@ string Funciones::toString() {
 void Funciones::buscar(short pbusqueda) {
 	string busqueda = "";
 	string bandera = "f";
-	switch (pbusqueda){
+	switch (pbusqueda) {
 	case 1: // busqueda por nombre
 		cout << "Digite el nombre de la pelicula: "; cin >> busqueda;
 		for (short i = 0; i < cantidad; i++) {
 			if (vector[i].getNombre() == busqueda)
 				cout << vector[i].toString();
-				bandera = "t";
+			bandera = "t";
 		}
 
 		if (bandera == "f") {
@@ -69,7 +69,7 @@ void Funciones::buscar(short pbusqueda) {
 
 	default:
 
-		cout << "Opcion digita errornea, por favor digite una opcion valida "<< endl;
+		cout << "Opcion digita errornea, por favor digite una opcion valida " << endl;
 
 		break;
 	}
@@ -170,7 +170,7 @@ public:
 	Sala() {
 		filas = 6;
 		columnas = 10;
-		
+
 		for (short i = 0; i < filas; i++) {
 			for (short j = 0; j < columnas; i++) {
 				sala1[filas][columnas] = "V";
@@ -183,12 +183,54 @@ public:
 		}
 	}
 	~Sala() {
-	
+
 	}
 	void mostarSala1();
 	void mostarSla2()
-	void selecionarAsietos1();
+		void selecionarAsietos1();
 	void selecionarAsietos2();
-	
 
+
+};
+
+class Contenedor {
+private:
+	short filas;
+	short columnas;
+	Asiento** ptrMatriz;
+	objAsiento = new Asiento = NULL;
+public:
+	Contenedor() {
+		filas = 6;
+		columnas = 10;
+		ptrMatriz = new Asiento * [filas];
+		for (int f = 0; f < filas; f++) {
+			ptrMatriz[f] = new Asiento[columnas];
+		}
+	}
+	~Contenedor();
+
+	void insertar(Asiento* objAsiento) {
+	}
+	void mostrar() {}
+};
+
+class Asiento
+{
+private:
+	string estado;
+public:
+	Asiento() {
+		estado = 0;
+	}
+
+	~Asiento() {}
+
+	void setEstado(string pEstado) {
+		estado = pEstado;
+	}
+
+	string getEstado() {
+		return estado;
+	}
 };
