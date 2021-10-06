@@ -41,6 +41,10 @@ public:
 	void buscar(short); // funcin para buscar
 
 };
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 string Funciones::toString() {
 	stringstream m;
 
