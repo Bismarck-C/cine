@@ -3,6 +3,8 @@
 Pelicula* objPeli = NULL;
 Funcion* ptrFuncion = NULL;
 Sala* ptrSala = NULL;
+Asiento* ptrAsiento = NULL;
+Coleccion* ptrColeccion = NULL;
 
 int main() {
 	short opc, tan;
@@ -24,6 +26,12 @@ int main() {
 		switch (opc)
 		{
 		case 1:
+			
+			ptrAsiento = new Asiento;
+			ptrAsiento->insertar();
+			ptrColeccion = new Coleccion(ptrAsiento);
+			ptrSala = new Sala(ptrColeccion);
+			
 			break;
 		case 2:
 
