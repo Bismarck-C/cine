@@ -4,8 +4,8 @@
 using namespace std;
 
 // creacion de clase para crear objetos de tipo pelicula
-class Pelicula { 
-	
+class Pelicula {
+
 public:
 	string nombre;
 	string genero;
@@ -71,7 +71,7 @@ public:
 		string nom, gene, tipo, dimen;
 		short tipoPublico;
 
-		
+
 		cout << "Digite el nombre de la Pelicula: "; cin >> (nom);
 		cout << "Digite el genero de la pelicula: "; cin >> gene;
 		cout << "Digite el Tipo : "; cin >> tipo;
@@ -84,8 +84,8 @@ public:
 		setDimension(dimen);
 		setTipoPublico(tipoPublico);
 
-	
-	
+
+
 	}
 
 
@@ -100,7 +100,7 @@ public:
 		s << "\n Genero: " << this->genero;
 		s << "\n Tipo: " << this->tipo;
 		s << "\n Dimension: " << this->dimension;
-		s << "\n Publico: " << this->tipoPublico<<endl;
+		s << "\n Publico: " << this->tipoPublico << endl;
 		s << "*********************************************" << endl;
 
 		return s.str();
@@ -115,11 +115,11 @@ public:
 	string hora;
 	string tanda;
 
-	Funcion(Pelicula *ptrObj, string pHora, string pTanda) {
+	Funcion(Pelicula* ptrObj, string pHora, string pTanda) {
 		objetoP = ptrObj;
 		hora = pHora;
 		tanda = pTanda;
-	
+
 	}
 
 
@@ -127,13 +127,16 @@ public:
 };
 
 class Sala {
+private:
+	short numeroSala;
+	string tipoSala;
 public:
-	Funcion *ptrFun;
-	//Contenedor* ptrSala[];
+	Funcion* ptrFun;
+	Coleccion* ptrSala[2];
 
 	Sala(Funcion* objFun) {
 		ptrFun = objFun;
-	
+
 	}
 	string toString() {
 		stringstream t;
@@ -141,6 +144,126 @@ public:
 		t << "Hora de Funcion: " << ptrFun->hora << endl;
 		t << "Pelicula: " << endl;
 		t << ptrFun->objetoP->toString() << endl;
+		for (short i = 0; i < 2; i++) {
+			t << ptrSala[i]->toString();
+		}
 		return t.str();
+	}
+
+	Sala(Coleccion* pMatriz) {
+		for (short i = 0; i < 2; i++) {
+			if (i < 2) {
+				ptrSala[i] = pMatriz;
+			}
+		}
+	}
+
+	void setTipoSala(string pTipoSala) {
+		tipoSala = pTipoSala;
+	}
+	void setNumeroSala(short pNumeroSala) {
+		numeroSala = pNumeroSala;
+	}
+
+	string getTipoSala() {
+		return tipoSala;
+	}
+
+	short getNumeroSala() {
+		return numeroSala;
+	}
+
+	void agregarSala() {
+		string nomS;
+		short numS;
+		cout << "Ingrese el tipo de sala" << endl;
+		cin >> nomS;
+		cout << "Ingrese el numero de sala" << endl;
+		cin >> numS;
+		setTipoSala(nomS);
+		setNumeroSala(numS);
+	}
+};
+
+class Asiento {
+private:
+	string estado;
+
+
+	string toString() {
+		stringstream a;
+		a << estado << endl;
+		return a.str();
+	}
+
+public:
+	Asiento() {
+		estado = "0";
+	}
+	~Asiento();
+	void setEstado(string pEstado) {
+		estado = pEstado;
+	}
+
+	string getEstado() {
+		return estado;
+	}
+
+	Asiento()
+	{
+	}
+
+	~Asiento()
+	{
+	}
+
+	void insertar() {
+		setEstado("O");
+	}
+
+};
+
+class Coleccion
+{
+private:
+	short filas, columnas;
+
+public:
+	Asiento*** ptrMatriz;
+	Coleccion();
+	~Coleccion();
+
+	Coleccion() {
+
+	}
+
+	~Coleccion()
+	{
+		for (short i = 0; i < filas; i++)
+			delete[]ptrMatriz[i];
+
+		delete[] ptrMatriz;
+	}
+
+	Coleccion(Asiento* pObAsiento) {
+		filas = 6;
+		columnas = 10;
+		ptrMatriz = new Asiento * *[filas];
+		for (short i = 0; i < filas; i++) {
+			ptrMatriz[i] = new Asiento * [columnas];
+		}
+		for (short i = 0; i < filas; i++)
+			for (short j = 0; j < columnas; j++) {
+				ptrMatriz[i][j] = pObAsiento;
+			}
+	}
+
+	string toString() {
+		stringstream h;
+		for (short i = 0; i < filas; i++)
+			for (short j = 0; j < columnas; j++) {
+				h << ptrMatriz[i][j]->getEstado() << endl;
+			}
+		return h.str();
 	}
 };
