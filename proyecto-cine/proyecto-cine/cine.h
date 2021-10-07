@@ -1,75 +1,17 @@
-
+#pragma once
 #include <iostream>
 #include <sstream>
 using namespace std;
 
-class Cinema {
-private:
-	Funciones objFunciones;
-	Sala objSala;
-public:
-	void
+// creacion de clase para crear objetos de tipo pelicula
+class Pelicula { 
 	
-
-
-
-
-
-};
-
-
-
-
-class Funciones {
-private:
-	Pelicula obj;
-	string dia;
-	string hora;
-	string funcion;
 public:
-
-	Funciones() {
-		dia = "";
-		hora = "DD/MM/AA";
-		funcion = "manana";
-	}
-	~Funciones() {
-
-	}
-	string toString(); //mostramos los objetos mediante el toString
-	void comprar();
-	void buscar(short); // funcin para buscar
-
-};
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-string Funciones::toString() {
-	stringstream m;
-
-
-}
-
-// se recibe una opcion desde el main para saber porque filtro quiere buscar la pelicula;
-void Funciones::buscar(short pbusqueda) {
-	string busqueda = "";
-	string bandera = "f";
-	
-
-}
-
-
-class Pelicula { // creacion de clase para crear objetos de tipo pelicula
-private:
-	// atributos
 	string nombre;
 	string genero;
 	string tipo;
 	string dimension;
 	short tipoPublico;
-
-public:
 	//constructor por defecto
 	Pelicula() {
 		nombre = " ";
@@ -85,9 +27,9 @@ public:
 		tipo = pClasi;
 		dimension = pDimen;
 		tipoPublico = pTipo;
-	
+
 	} // constructor con parametros
-		
+
 	~Pelicula() {
 
 	}
@@ -99,7 +41,7 @@ public:
 		genero = pGenero;
 	}
 	void setTipo(string pClasi) {
-		clasificacion = pClasi;
+		tipo = pClasi;
 
 	}
 	void setDimension(string pDimen) {
@@ -107,7 +49,7 @@ public:
 
 	}
 	void setTipoPublico(short pTipoP) {
-		tipoPublico = pTipoP
+		tipoPublico = pTipoP;
 	}
 	//metodos get
 	string getNombre() {
@@ -119,21 +61,46 @@ public:
 	string getTipo() {
 		return tipo;
 	}
-	strign getDimension() {
+	string getDimension() {
 		return dimension;
 	}
-	short setTipoPublico() {
-		return tipoPublico
+	short getTipoPublico() {
+		return tipoPublico;
 	}
+	void insertar() {
+		string nom, gene, tipo, dimen;
+		short tipoPublico;
+
+		
+		cout << "Digite el nombre de la Pelicula: "; cin >> (nom);
+		cout << "Digite el genero de la pelicula: "; cin >> gene;
+		cout << "Digite el Tipo : "; cin >> tipo;
+		cout << "Digite el la dimendion de la pelicula: "; cin >> dimen;
+		cout << "Digite el nuemero de tipo de publico 1 =*adulto* o 2 = *ninos*: "; cin >> tipoPublico;
+
+		setNombre(nom);
+		setGenero(gene);
+		setTipo(tipo);
+		setDimension(dimen);
+		setTipoPublico(tipoPublico);
+
+	
+	
+	}
+
+
+
+
+
 
 	string toString() {
 		stringstream s;
 		s << "********************************************" << endl;
-		s << "\n Nombre: " << this->nombre;
+		s << "Nombre: " << this->nombre << endl;
 		s << "\n Genero: " << this->genero;
-		s << "\n clasificacion" << this->clasificacion;
+		s << "\n Tipo: " << this->tipo;
 		s << "\n Dimension: " << this->dimension;
-		s << "\n Publico: " << this->tipoPublico;
+		s << "\n Publico: " << this->tipoPublico<<endl;
 		s << "*********************************************" << endl;
 
 		return s.str();
@@ -141,4 +108,39 @@ public:
 
 
 
+};
+class Funcion {
+public:
+	Pelicula* objetoP;
+	string hora;
+	string tanda;
+
+	Funcion(Pelicula *ptrObj, string pHora, string pTanda) {
+		objetoP = ptrObj;
+		hora = pHora;
+		tanda = pTanda;
+	
+	}
+
+
+
+};
+
+class Sala {
+public:
+	Funcion *ptrFun;
+	//Contenedor* ptrSala[];
+
+	Sala(Funcion* objFun) {
+		ptrFun = objFun;
+	
+	}
+	string toString() {
+		stringstream t;
+		t << "Tanda: " << ptrFun->tanda << endl;
+		t << "Hora de Funcion: " << ptrFun->hora << endl;
+		t << "Pelicula: " << endl;
+		t << ptrFun->objetoP->toString() << endl;
+		return t.str();
+	}
 };
