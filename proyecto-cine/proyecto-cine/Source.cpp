@@ -2,39 +2,40 @@
 
 Pelicula* objPeli = NULL;
 Funcion* ptrFuncion = NULL;
-Sala* ptrSala = NULL;
+Sala *ptrSala = NULL;
 Asiento* ptrAsiento = NULL;
-Coleccion* ptrColeccion = NULL;
 
 int main() {
-	short opc, tan;
-	string auxTanda, auxHora;
+	short opc, tan, numSa;
+	string auxTanda, auxHora, tipSa;
 
 	do{
 		system("cls");
 		cout << "_____Menu de opciones:_____" << endl;
 		cout << "1. Insertar Sala." << endl;
-		cout << "2. Insertar Funcion-Pelicula" << endl;
+		cout << "2. Insertar Funcion." << endl;
 		cout << "3. Mostrar" << endl;
 		cout << "4. Generar Tiquete" << endl;
 		cout << "5. Buscar Pelicula" << endl;
 		cout << "6. salir" << endl;
-		cout << "___Elija una de las opciones___" << endl;
+		cout << "Elija una de las opciones: " << endl;
 		cin >> opc;
 		system("cls");
 		
 		switch (opc)
 		{
 		case 1:
-			
+			cout << "Digite el Numero de sala: "; cin >> numSa;
+			cout << "Digite el tipo de la sala: "; cin >> tipSa;
 			ptrAsiento = new Asiento;
-			ptrAsiento->insertar();
-			ptrColeccion = new Coleccion(ptrAsiento);
-			ptrSala = new Sala(ptrColeccion);
+			ptrSala = new Sala(ptrAsiento, numSa, tipSa);
+			
+			
+			
+			
 			
 			break;
 		case 2:
-
 			do {
 				cout << "Digite la tanda: " << endl;
 				cout << "1. manana " << endl;
@@ -64,17 +65,17 @@ int main() {
 			objPeli = new Pelicula;
 			objPeli->insertar();
 			ptrFuncion = new Funcion(objPeli, auxHora, auxTanda);
-			ptrSala = new Sala(ptrFuncion);
+			ptrSala->insertarFuncion(ptrFuncion);
+
+			
 			
 			break;
 		case 3:
-
 			cout << ptrSala->toString();
+			
 
 			break;
 		case 4:
-			break;
-		case 5:
 			break;
 		default:
 			break;
@@ -83,7 +84,7 @@ int main() {
 		system("pause");
 		system("cls");
 
-	} while (opc != 6);
+	} while (opc != 5);
 
 	return 0;
 }

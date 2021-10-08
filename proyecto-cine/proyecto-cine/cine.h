@@ -87,12 +87,6 @@ public:
 
 
 	}
-
-
-
-
-
-
 	string toString() {
 		stringstream s;
 		s << "********************************************" << endl;
@@ -127,67 +121,106 @@ public:
 };
 
 class Sala {
+
 private:
 	short numeroSala;
 	string tipoSala;
 public:
 	Funcion* ptrFun;
-	Coleccion* ptrSala[2];
+	Coleccion* ptrCole;;
 
-	Sala(Funcion* objFun) {
+	Sala() {
+		
+	}
+	void insertarSala(Coleccion* pCole, short pNum, string pTipo) {
+		ptrCole = pCole;
+		numeroSala = pNum;
+		tipoSala = pTipo;
+	}
+
+	void insertarFuncion(Funcion* objFun) {
 		ptrFun = objFun;
 
 	}
+	void setNumSala(short pNum) {
+		numeroSala = pNum;
+	}
+	void setTipoSala(string pTipo) {
+		tipoSala = pTipo;
+	}
+
+	short getNumSala() {
+		return numeroSala;
+
+	}
+	string getTipoSala() {
+		return tipoSala;
+	}
+
+
+
+
 	string toString() {
 		stringstream t;
 		t << "Tanda: " << ptrFun->tanda << endl;
 		t << "Hora de Funcion: " << ptrFun->hora << endl;
 		t << "Pelicula: " << endl;
 		t << ptrFun->objetoP->toString() << endl;
-		for (short i = 0; i < 2; i++) {
-			t << ptrSala[i]->toString();
-		}
+
 		return t.str();
 	}
+};
+class Coleccion {
+private:
+	Asiento* ptrAsiento;
+	Asiento* matriz[10][10];
+	short filas;
+	short columnas;
 
-	Sala(Coleccion* pMatriz) {
-		for (short i = 0; i < 2; i++) {
-			if (i < 2) {
-				ptrSala[i] = pMatriz;
+	Coleccion() {
+		filas = 6;
+		columnas = 10;
+	}
+	void insertar(Asiento* pAsiento) {
+		ptrAsiento = pAsiento;
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				matriz[i][j] = ptrAsiento;
 			}
+
 		}
+	
+	}
+	string toString() {
+		stringstream m;
+
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				m << matriz[i][j]->toString()<<endl;
+			}
+
+		}
+	
 	}
 
-	void setTipoSala(string pTipoSala) {
-		tipoSala = pTipoSala;
-	}
-	void setNumeroSala(short pNumeroSala) {
-		numeroSala = pNumeroSala;
-	}
 
-	string getTipoSala() {
-		return tipoSala;
-	}
 
-	short getNumeroSala() {
-		return numeroSala;
-	}
 
-	void agregarSala() {
-		string nomS;
-		short numS;
-		cout << "Ingrese el tipo de sala" << endl;
-		cin >> nomS;
-		cout << "Ingrese el numero de sala" << endl;
-		cin >> numS;
-		setTipoSala(nomS);
-		setNumeroSala(numS);
-	}
+
+
+
 };
 
+
 class Asiento {
-private:
+public:
 	string estado;
+
+
+	Asiento() {
+		estado = "O";
+	}
+
 
 
 	string toString() {
@@ -196,11 +229,10 @@ private:
 		return a.str();
 	}
 
-public:
-	Asiento() {
-		estado = "0";
-	}
-	~Asiento();
+
+	~Asiento() {
+
+	};
 	void setEstado(string pEstado) {
 		estado = pEstado;
 	}
@@ -209,61 +241,8 @@ public:
 		return estado;
 	}
 
-	Asiento()
-	{
-	}
-
-	~Asiento()
-	{
-	}
-
 	void insertar() {
 		setEstado("O");
 	}
 
-};
-
-class Coleccion
-{
-private:
-	short filas, columnas;
-
-public:
-	Asiento*** ptrMatriz;
-	Coleccion();
-	~Coleccion();
-
-	Coleccion() {
-
-	}
-
-	~Coleccion()
-	{
-		for (short i = 0; i < filas; i++)
-			delete[]ptrMatriz[i];
-
-		delete[] ptrMatriz;
-	}
-
-	Coleccion(Asiento* pObAsiento) {
-		filas = 6;
-		columnas = 10;
-		ptrMatriz = new Asiento * *[filas];
-		for (short i = 0; i < filas; i++) {
-			ptrMatriz[i] = new Asiento * [columnas];
-		}
-		for (short i = 0; i < filas; i++)
-			for (short j = 0; j < columnas; j++) {
-				ptrMatriz[i][j] = pObAsiento;
-			}
-	}
-
-	string toString() {
-		stringstream h;
-		for (short i = 0; i < filas; i++)
-			for (short j = 0; j < columnas; j++) {
-				h << ptrMatriz[i][j]->getEstado() << endl;
-			}
-		return h.str();
-	}
 };
