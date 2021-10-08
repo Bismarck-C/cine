@@ -28,7 +28,9 @@ int main() {
 			cout << "Digite el Numero de sala: "; cin >> numSa;
 			cout << "Digite el tipo de la sala: "; cin >> tipSa;
 			ptrAsiento = new Asiento;
-			ptrSala = new Sala(ptrAsiento, numSa, tipSa);
+			ptrAsiento->insertar();
+			ptrSala = new Sala;
+			ptrSala->insertarSala(ptrAsiento, numSa, tipSa);
 			
 			
 			
