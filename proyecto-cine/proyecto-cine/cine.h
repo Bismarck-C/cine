@@ -11,6 +11,9 @@ private:
 	string genero;
 	string tipo;
 	string dimension;
+	string sinopsis;
+	string pais;
+	int anio;
 	short tipoPublico;
 public:
 	//constructor por defecto
@@ -19,15 +22,21 @@ public:
 		genero = " ";
 		tipo = " ";
 		dimension = " ";
+		sinopsis = " ";
+		pais = " ";
+		anio = 0;
 		tipoPublico = 0;
 
 	}
-	Pelicula(string pNom, string pGenero, string pClasi, string pDimen, short pTipo) {
+	Pelicula(string pNom, string pGenero, string pClasi, string pDimen, string pSinop, string pPais, int pAnio, short pTipo) {
 		nombre = pNom;
 		genero = pGenero;
 		tipo = pClasi;
 		dimension = pDimen;
 		tipoPublico = pTipo;
+		sinopsis = pSinop;
+		pais = pPais;
+		anio = pAnio;
 
 	} // constructor con parametros
 
@@ -49,6 +58,15 @@ public:
 		dimension = pDimen;
 
 	}
+	void setSinopsis(string Psinopsis) {
+		sinopsis = Psinopsis;
+	}
+	void setPais(string pPa) {
+		pais = pPa;
+	}
+	void setAnio(int pAno) {
+		anio = pAno;
+	}
 	void setTipoPublico(short pTipoP) {
 		tipoPublico = pTipoP;
 	}
@@ -62,6 +80,15 @@ public:
 	string getTipo() {
 		return tipo;
 	}
+	string getSinopsis() {
+		return sinopsis;
+	}
+	string getPais() {
+		return pais;
+	}
+	int getAnio() {
+		return anio;
+	}
 	string getDimension() {
 		return dimension;
 	}
@@ -73,16 +100,22 @@ public:
 		short tipoPublico;
 
 
-		cout << "Digite el nombre de la Pelicula: "; cin >> (nom);
+		cout << "\nDigite el nombre de la Pelicula: "; cin >> (nom);
 		cout << "Digite el genero de la pelicula: "; cin >> gene;
-		cout << "Digite el Tipo : "; cin >> tipo;
-		cout << "Digite el la dimendion de la pelicula: "; cin >> dimen;
+		cout << "Digite el Tipo: "; cin >> tipo;
+		cout << "Digite el la dimension de la pelicula: "; cin >> dimen;
+		cout << "Digite la sinopsis de la pelicula: "; cin >> sinopsis;
+		cout << "Digite el pais de la pelicula: "; cin >> pais;
+		cout << "Digite el anio de la pelicula: "; cin >> anio;
 		cout << "Digite el nuemero de tipo de publico 1 =*adulto* o 2 = *ninos*: "; cin >> tipoPublico;
 
 		setNombre(nom);
 		setGenero(gene);
 		setTipo(tipo);
 		setDimension(dimen);
+		setSinopsis(sinopsis);
+		setPais(pais);
+		setAnio(anio);
 		setTipoPublico(tipoPublico);
 
 
@@ -91,11 +124,15 @@ public:
 	string toString() {
 		stringstream s;
 		s << "********************************************" << endl;
-		s << "Nombre: " << this->nombre << endl;
-		s << "\n Genero: " << this->genero;
-		s << "\n Tipo: " << this->tipo;
-		s << "\n Dimension: " << this->dimension;
-		s << "\n Publico: " << this->tipoPublico << endl;
+		s << "Pelicula: " << endl;
+		s << "\n Nombre: " << this->nombre << endl;
+		s << " Genero: " << this->genero << endl;
+		s << " Tipo: " << this->tipo << endl;
+		s << " Dimension: " << this->dimension << endl;
+		s << " Sinopsis: " << this->sinopsis << endl;
+		s << " Pais: " << this->pais << endl;
+		s << " Anio: " << this->anio << endl;
+		s << " Publico: " << this->tipoPublico << endl;
 		s << "*********************************************" << endl;
 
 		return s.str();
@@ -109,16 +146,17 @@ class Funcion {
 public:
 	Pelicula* objetoP;
 	string hora;
+	string dia;
 	string tanda;
 
-	Funcion(Pelicula* ptrObj, string pHora, string pTanda) {
+	Funcion(Pelicula* ptrObj, string pHora, string pTanda, string pDia) {
 		objetoP = ptrObj;
 		hora = pHora;
 		tanda = pTanda;
-
+		dia = pDia;
 	}
 
-	
+
 
 
 
@@ -136,7 +174,7 @@ public:
 
 	string toString() {
 		stringstream a;
-		a << this ->estado  << endl;
+		a << this->estado << endl;
 		return a.str();
 	}
 
@@ -160,10 +198,11 @@ public:
 class Coleccion {
 private:
 	Asiento* ptr;
-	Asiento*** matriz;
-	short filas;
+
+	short filas, id = 0;
 	short columnas;
 public:
+	Asiento*** matriz;
 	Coleccion(Asiento* pAsiento) {
 		ptr = NULL;
 		filas = 6;
@@ -171,7 +210,7 @@ public:
 		matriz = new Asiento * *[filas];
 		for (short i = 0; i < filas; i++)
 			matriz[i] = new Asiento * [columnas];
-		for (short f = 0; f< filas; f++) {
+		for (short f = 0; f < filas; f++) {
 			for (short c = 0; c < columnas; c++) {
 				matriz[f][c] = NULL;
 			}
@@ -187,15 +226,26 @@ public:
 		m << "---------------------Pantalla--------------------" << endl;
 		for (short i = 0; i < filas; i++) {
 			for (short j = 0; j < columnas; j++) {
-				if (matriz[i][j] != NULL)
-					
-					m << "[" << matriz[i][j]->getEstado() << "]"<<"  ";
+				//if (matriz[i][j] != NULL)
+
+					m << "[" << matriz[i][j]->getEstado() << "]" << "  ";
 			}
 			m << endl;
 		}
 		return m.str();
 	}
-	
+
+	void reservar(short pFi, short pCo) {
+
+		if (matriz[pFi][pCo]->getEstado() == "O") {
+			matriz[pFi][pCo]->setEstado("X");
+			cout << "Reserva exitosa" << endl;
+		}
+		else {
+			cout << "El asiento ya esta reservado" << endl;
+		}
+	}
+
 };
 
 class Sala {
@@ -207,20 +257,21 @@ private:
 	Coleccion* ptrCole;
 
 public:
-	
+
 
 	Sala() {
-		
+
 	}
-	void insertarSala(Coleccion* pCole, short pNum){
+	void insertarSala(Coleccion* pCole, short pNum) {
 		ptrCole = pCole;
-		numeroSala = pNum ;
+		numeroSala = pNum;
 		if (pNum < 2) {
 			tipoSala = "VIP";
-		}else{
-			tipoSala ="normal";
 		}
-		
+		else {
+			tipoSala = "normal";
+		}
+
 	}
 
 	void setFuncion(Funcion* objFun) {
@@ -232,9 +283,9 @@ public:
 	}
 	Coleccion* getCole() {
 		return ptrCole;
-	
+
 	}
-	
+
 	void setNumSala(short pNum) {
 		numeroSala = pNum;
 	}
@@ -255,17 +306,20 @@ public:
 
 	string toString() {
 		stringstream t;
-		t << "Tanda: " << ptrFun->tanda << endl;
-		t << "Hora de Funcion: " << getFuncion()->hora << endl;
-		t << "Pelicula: " << endl;
-		t << getFuncion()->objetoP->toString() << endl;
+		t << "Funcion: " << endl;
+		t << "\nTanda: " << ptrFun->tanda << endl;
+		t << "Hora de la Funcion: " << ptrFun->hora << endl;
+		t << "Dia de la Funcion: " << ptrFun->dia << endl;
+
+		t << ptrFun->objetoP->toString() << endl;
 		t << getCole()->toString();
 
 
 		return t.str();
 	}
 };
-class Cinema{
+
+class Cinema {
 private:
 	Sala** ptrVector;
 	short tamano;
@@ -273,7 +327,7 @@ public:
 	Cinema() {
 		tamano = 2;
 		ptrVector = new Sala * [tamano];
-		for (short i = 0; i < tamano; i++){
+		for (short i = 0; i < tamano; i++) {
 			ptrVector[i] = NULL;
 
 		}
@@ -281,23 +335,23 @@ public:
 
 	bool insertar(Sala* pVector, short pNum) {
 
-		
-		if (ptrVector[pNum-1] == NULL) {
-			ptrVector[pNum-1] = pVector;
+
+		if (ptrVector[pNum/*-1*/] == NULL) {
+			ptrVector[pNum /*-1*/] = pVector;
 			return true;
 		}
 		return false;
-	
-	
+
+
 	}
-	void insertarFuncion(Funcion*ptr, short pNum) {
-		ptrVector[pNum - 1]->setFuncion(ptr);
+	void insertarFuncion(Funcion* ptr, short pNum) {
+		ptrVector[pNum /*-1*/]->setFuncion(ptr);
 	}
-		
+
 	string toString(short pNum) {
 		stringstream b;
 		//for (short i = 0; i < 2; i++){
-			b<< ptrVector[pNum] -> toString()<<endl;
+		b << ptrVector[pNum]->toString() << endl;
 
 		//}
 		return b.str();
