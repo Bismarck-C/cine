@@ -1,12 +1,18 @@
 #include "cine.h"
 
-Pelicula* objPeli = NULL;
-Funcion* ptrFuncion = NULL;
-Sala *ptrSala = NULL;
-Asiento* ptrAsiento = NULL;
-
 int main() {
-	short opc, tan, numSa;
+	Pelicula* objPeli = NULL;
+	Funcion* ptrFuncion = NULL;
+	Sala* ptrSala = NULL;
+	Coleccion* ptrCole;
+	Asiento* ptrAsiento = NULL;
+	Cinema* ptrCinema = NULL;
+
+	Sala* auxSala = NULL;
+
+	
+	short opc, tan, numSa, sala, insertar;
+	short contador = 0;
 	string auxTanda, auxHora, tipSa;
 
 	do{
@@ -25,12 +31,23 @@ int main() {
 		switch (opc)
 		{
 		case 1:
-			cout << "Digite el Numero de sala: "; cin >> numSa;
-			cout << "Digite el tipo de la sala: "; cin >> tipSa;
+			
+			cout << "Digite el numero de sala a crear: "; cin >> sala;
 			ptrAsiento = new Asiento;
-			ptrAsiento->insertar();
+			ptrCole = new Coleccion(ptrAsiento);
 			ptrSala = new Sala;
-			ptrSala->insertarSala(ptrAsiento, numSa, tipSa);
+			ptrSala->insertarSala(ptrCole, sala);
+			ptrCinema = new Cinema;
+			if (ptrCinema->insertar(ptrSala, sala)) {
+				cout << "Se creo la Sala con exito" << endl;
+			}
+			else {
+				cout << "Error! No se permiten crear mas Salas" << endl;
+			}
+
+			
+			
+			
 			
 			
 			
@@ -38,6 +55,8 @@ int main() {
 			
 			break;
 		case 2:
+			cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
+
 			do {
 				cout << "Digite la tanda: " << endl;
 				cout << "1. manana " << endl;
@@ -67,13 +86,30 @@ int main() {
 			objPeli = new Pelicula;
 			objPeli->insertar();
 			ptrFuncion = new Funcion(objPeli, auxHora, auxTanda);
-			ptrSala->insertarFuncion(ptrFuncion);
+			ptrCinema->insertarFuncion(ptrFuncion, insertar);
+
+			
+
+
+			
+			
+
+
+
+			
+
+
+
+
+			
+			
 
 			
 			
 			break;
 		case 3:
-			cout << ptrSala->toString();
+			cout << "Digite la Sala a mostrar"; cin >> sala;
+			cout << ptrCinema->toString(sala);
 			
 
 			break;
