@@ -228,21 +228,23 @@ public:
 			for (short j = 0; j < columnas; j++) {
 				//if (matriz[i][j] != NULL)
 
-					m << "[" << matriz[i][j]->getEstado() << "]" << "  ";
+				m << "[" << matriz[i][j]->getEstado() << "]" << "  ";
 			}
 			m << endl;
 		}
 		return m.str();
 	}
 
-	void reservar(short pFi, short pCo) {
+	bool reservar(short pFill, short pColumm) {
 
-		if (matriz[pFi][pCo]->getEstado() == "O") {
-			matriz[pFi][pCo]->setEstado("X");
+		if (matriz[pFill][pColumm]->getEstado() == "O") {
+			matriz[pFill][pColumm]->setEstado("X");
 			cout << "Reserva exitosa" << endl;
+			return true;
 		}
 		else {
 			cout << "El asiento ya esta reservado" << endl;
+			return false;
 		}
 	}
 
@@ -255,12 +257,10 @@ private:
 	string tipoSala;
 	Funcion* ptrFun;
 	Coleccion* ptrCole;
-
 public:
 
-
 	Sala() {
-
+		numeroSala = 0;
 	}
 	void insertarSala(Coleccion* pCole, short pNum) {
 		ptrCole = pCole;
@@ -301,9 +301,6 @@ public:
 		return tipoSala;
 	}
 
-
-
-
 	string toString() {
 		stringstream t;
 		t << "Funcion: " << endl;
@@ -321,9 +318,11 @@ public:
 
 class Cinema {
 private:
-	Sala** ptrVector;
+
 	short tamano;
 public:
+	Sala** ptrVector;
+
 	Cinema() {
 		tamano = 2;
 		ptrVector = new Sala * [tamano];
@@ -336,8 +335,8 @@ public:
 	bool insertar(Sala* pVector, short pNum) {
 
 
-		if (ptrVector[pNum/*-1*/] == NULL) {
-			ptrVector[pNum /*-1*/] = pVector;
+		if (ptrVector[pNum - 1] == NULL) {
+			ptrVector[pNum - 1] = pVector;
 			return true;
 		}
 		return false;
@@ -345,7 +344,7 @@ public:
 
 	}
 	void insertarFuncion(Funcion* ptr, short pNum) {
-		ptrVector[pNum /*-1*/]->setFuncion(ptr);
+		ptrVector[pNum - 1]->setFuncion(ptr);
 	}
 
 	string toString(short pNum) {
@@ -358,11 +357,22 @@ public:
 	}
 
 
-
+	bool ValidarSala(short pNuum)
+	{
+		for (short i = 0; i < 2; i++) {
+			if (ptrVector[i]->getNumSala() == pNuum) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
 
 
 
 };
+
 
 
 

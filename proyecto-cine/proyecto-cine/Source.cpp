@@ -11,7 +11,7 @@ int main() {
 	Sala* auxSala = NULL;
 
 
-	short cont = 0, cont2 = 0, opc, tan, numSa, sala, insertar;
+	short cont = 0, cont2 = 0, cont3 = 0, opc, tan, numSa, sala, insertar;
 	short contador = 0;
 	string auxTanda, auxHora, auxDia, tipSa;
 
@@ -32,22 +32,50 @@ int main() {
 		{
 
 		case 1:
-			cont++;
-			cout << "Digite el numero de sala a crear: "; cin >> sala;
-			ptrAsiento = new Asiento;
-			ptrCole = new Coleccion(ptrAsiento);
-			ptrSala = new Sala;
-			ptrSala->insertarSala(ptrCole, sala);
-			ptrCinema = new Cinema;
-			if (ptrCinema->insertar(ptrSala, sala)) {
-				cout << "Se creo la Sala con exito" << endl;
+			if (cont2 < 2) {
+
+				cout << "Digite el numero de sala a crear: "; cin >> sala;
+				if (cont2 < 1) {
+					cont++;
+					cont2++;
+					//cout << "Digite el numero de sala a crear: "; cin >> sala;
+					ptrAsiento = new Asiento;
+					ptrCole = new Coleccion(ptrAsiento);
+					ptrSala = new Sala;
+					ptrSala->insertarSala(ptrCole, sala);
+					ptrCinema = new Cinema;
+					if (ptrCinema->insertar(ptrSala, sala)) {
+						cout << "Se creo la Sala con exito" << endl;
+					}
+					else {
+						cout << "Error! No se permiten crear mas Salas" << endl;
+					}
+				}
+				else if (ptrCinema->ValidarSala(sala) == true) {
+
+					cout << "La sala ya fue creada." << endl;
+
+				}
+				else {
+					cont++;
+					cont2++;
+					//cout << "Digite el numero de sala a crear: "; cin >> sala;
+					ptrAsiento = new Asiento;
+					ptrCole = new Coleccion(ptrAsiento);
+					ptrSala = new Sala;
+					ptrSala->insertarSala(ptrCole, sala);
+					ptrCinema = new Cinema;
+					if (ptrCinema->insertar(ptrSala, sala)) {
+						cout << "Se creo la Sala con exito" << endl;
+					}
+					else {
+						cout << "Error! No se permiten crear mas Salas" << endl;
+					}
+				}
 			}
 			else {
-				cout << "Error! No se permiten crear mas Salas" << endl;
+				cout << "Ya se crearon todas las salas" << endl;
 			}
-
-
-
 
 
 
@@ -57,7 +85,7 @@ int main() {
 			break;
 		case 2:
 			if (cont >= 1) {
-				cont2++;
+				cont3++;
 				cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
 				do {
 					cout << "Digite la tanda: " << endl;
@@ -113,7 +141,7 @@ int main() {
 
 			break;
 		case 3:
-			if (cont2 >= 1) {
+			if (cont3 >= 1) {
 				cout << "Digite la Sala a mostrar: "; cin >> sala;
 				cout << ptrCinema->toString(sala);
 			}
@@ -123,8 +151,12 @@ int main() {
 
 			break;
 		case 4:
+			short fill, columm;
 
-				
+			cout << "Digite la fila: "; cin >> fill;
+			cout << "Digite la columna: "; cin >> columm;
+			ptrCole->reservar(fill, columm);
+
 			break;
 		case 5:
 			break;
