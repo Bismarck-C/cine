@@ -6,12 +6,13 @@ using namespace std;
 // creacion de clase para crear objetos de tipo pelicula
 class Pelicula {
 
-public:
+private:
 	string nombre;
 	string genero;
 	string tipo;
 	string dimension;
 	short tipoPublico;
+public:
 	//constructor por defecto
 	Pelicula() {
 		nombre = " ";
@@ -103,6 +104,7 @@ public:
 
 
 };
+
 class Funcion {
 public:
 	Pelicula* objetoP;
@@ -116,8 +118,84 @@ public:
 
 	}
 
+	
 
 
+
+};
+class Asiento {
+public:
+	string estado;
+
+
+	Asiento() {
+		estado = "O";
+	}
+
+
+
+	string toString() {
+		stringstream a;
+		a << this ->estado  << endl;
+		return a.str();
+	}
+
+
+	~Asiento() {
+
+	};
+	void setEstado(string pEstado) {
+		estado = pEstado;
+	}
+
+	string getEstado() {
+		return estado;
+	}
+
+	void insertar() {
+		setEstado("O");
+	}
+
+};
+class Coleccion {
+private:
+	Asiento* ptr;
+	Asiento*** matriz;
+	short filas;
+	short columnas;
+public:
+	Coleccion(Asiento* pAsiento) {
+		ptr = NULL;
+		filas = 6;
+		columnas = 10;
+		matriz = new Asiento * *[filas];
+		for (short i = 0; i < filas; i++)
+			matriz[i] = new Asiento * [columnas];
+		for (short f = 0; f< filas; f++) {
+			for (short c = 0; c < columnas; c++) {
+				matriz[f][c] = NULL;
+			}
+		}
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				matriz[i][j] = pAsiento;;
+			}
+		}
+	}
+	string toString() {
+		stringstream m;
+		m << "---------------------Pantalla--------------------" << endl;
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				if (matriz[i][j] != NULL)
+					
+					m << "[" << matriz[i][j]->getEstado() << "]"<<"  ";
+			}
+			m << endl;
+		}
+		return m.str();
+	}
+	
 };
 
 class Sala {
@@ -125,23 +203,38 @@ class Sala {
 private:
 	short numeroSala;
 	string tipoSala;
-public:
 	Funcion* ptrFun;
-	Coleccion* ptrCole;;
+	Coleccion* ptrCole;
+
+public:
+	
 
 	Sala() {
 		
 	}
-	void insertarSala(Coleccion* pCole, short pNum, string pTipo) {
+	void insertarSala(Coleccion* pCole, short pNum){
 		ptrCole = pCole;
-		numeroSala = pNum;
-		tipoSala = pTipo;
+		numeroSala = pNum ;
+		if (pNum < 2) {
+			tipoSala = "VIP";
+		}else{
+			tipoSala ="normal";
+		}
+		
 	}
 
-	void insertarFuncion(Funcion* objFun) {
+	void setFuncion(Funcion* objFun) {
 		ptrFun = objFun;
 
 	}
+	Funcion* retornarFuncion() {
+		return ptrFun;
+	}
+	Coleccion* getCole() {
+		return ptrCole;
+	
+	}
+	
 	void setNumSala(short pNum) {
 		numeroSala = pNum;
 	}
@@ -163,86 +256,60 @@ public:
 	string toString() {
 		stringstream t;
 		t << "Tanda: " << ptrFun->tanda << endl;
-		t << "Hora de Funcion: " << ptrFun->hora << endl;
+		t << "Hora de Funcion: " << getFuncion()->hora << endl;
 		t << "Pelicula: " << endl;
-		t << ptrFun->objetoP->toString() << endl;
+		t << getFuncion()->objetoP->toString() << endl;
+		t << getCole()->toString();
+
 
 		return t.str();
 	}
 };
-class Coleccion {
+class Cinema{
 private:
-	Asiento* ptrAsiento;
-	Asiento* matriz[10][10];
-	short filas;
-	short columnas;
-
-	Coleccion() {
-		filas = 6;
-		columnas = 10;
-	}
-	void insertar(Asiento* pAsiento) {
-		ptrAsiento = pAsiento;
-		for (short i = 0; i < filas; i++) {
-			for (short j = 0; j < columnas; j++) {
-				matriz[i][j] = ptrAsiento;
-			}
-
-		}
-	
-	}
-	string toString() {
-		stringstream m;
-
-		for (short i = 0; i < filas; i++) {
-			for (short j = 0; j < columnas; j++) {
-				m << matriz[i][j]->toString()<<endl;
-			}
-
-		}
-	
-	}
-
-
-
-
-
-
-
-};
-
-
-class Asiento {
+	Sala** ptrVector;
+	short tamano;
 public:
-	string estado;
+	Cinema() {
+		tamano = 2;
+		ptrVector = new Sala * [tamano];
+		for (short i = 0; i < tamano; i++){
+			ptrVector[i] = NULL;
 
+		}
+	}
 
-	Asiento() {
-		estado = "O";
+	bool insertar(Sala* pVector, short pNum) {
+
+		
+		if (ptrVector[pNum-1] == NULL) {
+			ptrVector[pNum-1] = pVector;
+			return true;
+		}
+		return false;
+	
+	
+	}
+	void insertarFuncion(Funcion*ptr, short pNum) {
+		ptrVector[pNum - 1]->setFuncion(ptr);
+	}
+		
+	string toString(short pNum) {
+		stringstream b;
+		//for (short i = 0; i < 2; i++){
+			b<< ptrVector[pNum] -> toString()<<endl;
+
+		//}
+		return b.str();
 	}
 
 
 
-	string toString() {
-		stringstream a;
-		a << estado << endl;
-		return a.str();
-	}
 
 
-	~Asiento() {
-
-	};
-	void setEstado(string pEstado) {
-		estado = pEstado;
-	}
-
-	string getEstado() {
-		return estado;
-	}
-
-	void insertar() {
-		setEstado("O");
-	}
 
 };
+
+
+
+
