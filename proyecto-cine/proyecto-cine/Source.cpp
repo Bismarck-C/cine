@@ -3,28 +3,35 @@
 int main() {
 	Pelicula* objPeli = NULL;
 	Funcion* ptrFuncion = NULL;
-	Sala* ptrSala = NULL;
-	Coleccion* ptrCole;
+	Sala* ptrSala1 = NULL;
+	Sala* ptrSala2 = NULL;
+	Coleccion* ptrCole = NULL;
 	Asiento* ptrAsiento = NULL;
 	Cinema* ptrCinema = NULL;
 
 	Sala* auxSala = NULL;
+	Pelicula* auxPeli = NULL;
 
+	ptrCinema = new Cinema;
 
 	short cont = 0, cont2 = 0, cont3 = 0, opc, tan, numSa, sala, insertar;
 	short contador = 0;
 	string auxTanda, auxHora, auxDia, tipSa;
-
+	string nom, gene, tipo, dimen, sinopsis, pais;
+	short tipoPublico, annio;
 	do {
 		system("cls");
-		cout << "_____Menu de opciones:_____" << endl;
-		cout << "1. Insertar Sala." << endl;
-		cout << "2. Insertar Funcion." << endl;
-		cout << "3. Mostrar" << endl;
-		cout << "4. Generar Tiquete" << endl;
-		cout << "5. Buscar Pelicula" << endl;
-		cout << "6. salir" << endl;
-		cout << "Elija una de las opciones: " << endl;
+		cout << "\t******************************************************" << endl;
+		cout << "\t*                     ++Menu++                       *" << endl;
+		cout << "\t******************************************************" << endl;
+		cout << endl;
+		cout << "[1]................................. Insertar Sala." << endl;
+		cout << "[2]................................. Insertar Funcion." << endl;
+		cout << "[3]................................. Mostrar Funciones" << endl;
+		cout << "[4]................................. Generar Tiquete" << endl;
+		cout << "[5]................................. Buscar Pelicula" << endl;
+		cout << "[6]................................. salir" << endl;
+		cout << "Elija una de las opciones: ";
 		cin >> opc;
 		system("cls");
 
@@ -32,122 +39,103 @@ int main() {
 		{
 
 		case 1:
-			if (cont2 < 2) {
 
+			do{
 				cout << "Digite el numero de sala a crear: "; cin >> sala;
-				if (cont2 < 1) {
-					cont++;
-					cont2++;
-					//cout << "Digite el numero de sala a crear: "; cin >> sala;
+				cout << "Digite el tipo de sala: "; cin >> tipSa;
+				if (sala == 1) {
 					ptrAsiento = new Asiento;
-					ptrCole = new Coleccion(ptrAsiento);
-					ptrSala = new Sala;
-					ptrSala->insertarSala(ptrCole, sala);
-					ptrCinema = new Cinema;
-					if (ptrCinema->insertar(ptrSala, sala)) {
-						cout << "Se creo la Sala con exito" << endl;
-					}
-					else {
-						cout << "Error! No se permiten crear mas Salas" << endl;
-					}
-				}
-				else if (ptrCinema->ValidarSala(sala) == true) {
+					ptrCole = new Coleccion;
+					ptrCole->insertarAsientos(ptrAsiento);
+					ptrSala1 = new Sala(sala, tipSa);
+					ptrSala1->insertarCole(ptrCole);
+					cout << "Se creo con exito la sala!" << endl;
 
-					cout << "La sala ya fue creada." << endl;
+
+				}
+				else if (sala == 2) {
+					ptrAsiento = new Asiento;
+					ptrCole = new Coleccion;
+					ptrCole->insertarAsientos(ptrAsiento);
+					ptrSala2 = new Sala(sala, tipSa);
+					ptrSala2->insertarCole(ptrCole);
+					cout << "Se creo con exito la sala!" << endl;
+
+
 
 				}
 				else {
-					cont++;
-					cont2++;
-					//cout << "Digite el numero de sala a crear: "; cin >> sala;
-					ptrAsiento = new Asiento;
-					ptrCole = new Coleccion(ptrAsiento);
-					ptrSala = new Sala;
-					ptrSala->insertarSala(ptrCole, sala);
-					ptrCinema = new Cinema;
-					if (ptrCinema->insertar(ptrSala, sala)) {
-						cout << "Se creo la Sala con exito" << endl;
-					}
-					else {
-						cout << "Error! No se permiten crear mas Salas" << endl;
-					}
+					cout << "Error! numero de sala incorrecto, digite un valor valido!" << endl;
+
 				}
-			}
-			else {
-				cout << "Ya se crearon todas las salas" << endl;
-			}
+				system("pause");
+				system("cls");
 
+			} while (sala >= 3);
 
-
-
+			
+		
 
 
 			break;
 		case 2:
-			if (cont >= 1) {
-				cont3++;
-				cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
-				do {
-					cout << "Digite la tanda: " << endl;
-					cout << "1. manana " << endl;
-					cout << "2. tarde " << endl;
-					cout << "3. noche " << endl;
-					cout << "Opcion: "; cin >> tan;
-				} while (tan > 3);
-				cout << endl;
+			
+			cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
+			do {
+				cout << "Digite la tanda: " << endl;
+				cout << "1. manana " << endl;
+				cout << "2. tarde " << endl;
+				cout << "3. noche " << endl;
+				cout << "Opcion: "; cin >> tan;
+			} while (tan > 3);
+			cout << endl;
 
-				switch (tan)
-				{
-				case 1:
-					auxTanda = "manana";
-					break;
-				case 2:
-					auxTanda = "tarde";
-					break;
-				case 3:
-					auxTanda = "Noche";
-					break;
-				}
-				cout << endl;
+			switch (tan)
+			{
+			case 1:
+				auxTanda = "manana";
+				break;
+			case 2:
+				auxTanda = "tarde";
+				break;
+			case 3:
+				auxTanda = "Noche";
+				break;
+			}
+			cout << endl;
 
-				cout << "Digite la hora de la Funcion: "; cin >> auxHora;
-				cout << "Digite el dia de la funcion: "; cin >> auxDia;
-				objPeli = new Pelicula;
-				objPeli->insertar();
-				ptrFuncion = new Funcion(objPeli, auxHora, auxTanda, auxDia);
-				ptrCinema->insertarFuncion(ptrFuncion, insertar);
+			cout << "Digite la hora de la Funcion: "; cin >> auxHora;
+			cout << "Digite el dia de la funcion: "; cin >> auxDia;
+
+			objPeli = new Pelicula;
+			ptrFuncion = new Funcion;
+			cout << "\nDigite el nombre de la Pelicula: "; cin >> nom;
+			cout << "Digite el genero de la pelicula: "; cin >> gene;
+			cout << "Digite el Tipo: "; cin >> tipo;
+			cout << "Digite el la dimension de la pelicula: "; cin >> dimen;
+			cout << "Digite la sinopsis de la pelicula: "; cin >> sinopsis;
+			cout << "Digite el pais de la pelicula: "; cin >> pais;
+			cout << "Digite el anio de la pelicula: "; cin >> annio;
+			cout << "Digite el nuemero de tipo de publico 1 =*adulto* o 2 = *ninos*: "; cin >> tipoPublico;
+			objPeli->insertarPelicula(nom, gene, tipo, dimen, sinopsis, pais, annio, tipoPublico);
+			ptrFuncion->insertarFuncion(auxHora, auxTanda, auxDia);
+			ptrFuncion->insertarPelicula(objPeli);
+			if (insertar == 1) {
+				ptrSala1->insertarFuncion(ptrFuncion);
+				ptrCinema->insertar(ptrSala1, insertar);
 			}
 			else {
-				cout << "No hay salas ingresadas" << endl;
+				ptrSala2->insertarFuncion(ptrFuncion);
+				ptrCinema->insertar(ptrSala2, insertar);
+
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			//ptrCinema->obtnerElemento(insertar)->insertarFuncion(ptrFuncion);
+			//ptrCinema->obtnerElemento(insertar)->obtenerFuncion()->insertarPelicula(objPeli);
 
 			break;
 		case 3:
-			if (cont3 >= 1) {
-				cout << "Digite la Sala a mostrar: "; cin >> sala;
-				cout << ptrCinema->toString(sala);
-			}
-			else {
-				cout << "No hay funciones ingresadas." << endl;
-			}
+			cout << ptrCinema->toString();
+		
 
 			break;
 		case 4:
