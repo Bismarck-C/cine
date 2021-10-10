@@ -260,15 +260,17 @@ public:
 		return m.str();
 	}
 
-	void reservar(short pFill, short pColumm) {
+	bool reservar(short pFill, short pColumm) {
 		pColumm = pColumm - 1;
 		if (matriz[pFill][pColumm].getEstado() == "O") {
 			matriz[pFill][pColumm].setEstado("X");
 			cout << "Reserva exitosa" << endl;
+			return true;
 
 		}
 		else {
 			cout << "El asiento ya esta reservado" << endl;
+			return false;
 		}
 	}
 
@@ -289,7 +291,7 @@ public:
 			tipoSala = "VIP";
 		}
 		else {
-			tipoSala = "VIP";
+			tipoSala = "normal";
 		}
 		
 		ptrFun = NULL;
@@ -329,6 +331,7 @@ public:
 
 	string toString() {
 		stringstream t;
+		t << "Tipo de sala: " << tipoSala << endl;
 		t << "Funcion: "<<obtenerFuncion()->getTanda()<<endl;
 		t << "Hora de la Funcion: " << obtenerFuncion()->getHora() << endl;
 		t << "Dia de la Funcion: " << obtenerFuncion()->getDia() << endl;

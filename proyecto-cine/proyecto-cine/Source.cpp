@@ -1,4 +1,4 @@
-#include "cine.h"
+﻿#include "Cine.h"
 #include <sstream>
 
 int main() {
@@ -15,13 +15,17 @@ int main() {
 
 	ptrCinema = new Cinema;
 
-	short cont = 0, cont2 = 0, cont3 = 0, opc, tan, numSa, sala, insertar;
+	float total;
+	short  opc, tan, numSa, sala, insertar;
 	short contador = 0;
 	string auxTanda, auxHora, auxDia;
 	string nom, gene, tipo, dimen, sinopsis, pais;
-	short tipoPublico, annio, tipSa;
+	short tipoPublico, annio, tipSa, totalBoletos, bole1 = 0, bole2 = 0;
 	char letra;
 	short fila = 0, colum;
+	float boletoAdulto, boletosNi;
+	
+
 	
 	do {
 		system("cls");
@@ -143,38 +147,140 @@ int main() {
 
 			break;
 		case 4:
-			cout << "Digite el Numero de sala: "; cin >> sala;
+
+			cout << "\t******************************************************" << endl;
+			cout << "\t*                     Tiqueteria                     *" << endl;
+			cout << "\t******************************************************" << endl;
+			cout << endl;
+			cout << ptrCinema->toString() << endl;
+
+			cout << "Digite el Numero de sala de la pelicula: "; cin >> sala;
+			system("cls");
+
+			cout << "\t******************************************************" << endl;
+			cout << "\t*                     Tiqueteria                     *" << endl;
+			cout << "\t******************************************************" << endl;
+			cout << endl;
+
+
 			cout<< ptrCinema->obtnerElemento(sala)->toString();
+
 			
-			
+			/*El precio del tiquete depende del tipo de público, y de la sala; si el tipo es niños(as) y la sala regular, el
+			precio del tiquete es ₵3000, si el tipo es niños(as) y la sala VIP, el precio del tiquete es ₵4500. Si el tipo es
+			adultos y la sala regular, el precio del tiquete es ₵5000, si el tipo es adultos y la sala VIP, el precio del tiquete
+			es ₵6500*/
+			cout << "Esta pelicula es para: " << ptrCinema->obtnerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() << endl;
+			if (ptrCinema->obtnerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtnerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "ninos") {
+				boletosNi = 3000;
+				boletoAdulto = 3500;
+				cout << "\t******************************************************" << endl;
+				cout << "\t*                Apta para todo publico              *" << endl;
+				cout << "\t******************************************************" << endl;
+				cout << endl;
+				cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
+				cout << "Digite cuantos boletos adulto: "; cin >> bole1;
+				totalBoletos = bole1 + bole2;
 
 
-			cout << "Digite letra de la Fila: "; cin >> letra;
-			switch (letra){
-			case 'A': case 'a':
-				fila = 0;
-				break;
-			case 'B': case 'b':
-				fila = 1;
-				break;
-			case 'C':case 'c':
-				fila = 2;
-				break;
-			case 'D': case 'd':
-				fila = 3;
-				break;
-			case 'E':case 'e':
-				fila = 4;
-				break;
-			case 'F': case 'f':
-				fila = 5;
-				break;
-				
-			default:
-				break;
+
+
 			}
-			cout << "Digite la columna: "; cin >> colum;
-			ptrCinema->obtnerElemento(sala)->obtenerCole()->reservar(fila, colum);
+			else 
+				if (ptrCinema->obtnerElemento(sala)->getTipoSala() == "VIP" && ptrCinema->obtnerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "ninos") {
+					boletosNi = 4500;
+					boletoAdulto = 4800;
+					cout << "\t******************************************************" << endl;
+					cout << "\t*                Apta para todo publico              *" << endl;
+					cout << "\t******************************************************" << endl;
+					cout << endl;
+					cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
+					cout << "Digite cuantos boletos adulto: "; cin >> bole1;
+					totalBoletos = bole1 + bole2;
+
+
+				}
+				else 
+					if (ptrCinema->obtnerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtnerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "adultos") {
+						boletoAdulto = 5000;
+						cout << "\t******************************************************" << endl;
+						cout << "\t*                Apta solo para aultos               *" << endl;
+						cout << "\t******************************************************" << endl;
+						cout << endl;
+						cout << "Digite cuantos boletos para adulto: "; cin >> bole1;
+						totalBoletos = bole1 + bole2;
+					}
+					else {
+						cout << "\t******************************************************" << endl;
+						cout << "\t*                Apta solo para aultos               *" << endl;
+						cout << "\t******************************************************" << endl;
+						cout << endl;
+						cout << "Digite cuantos boletos para adulto: "; cin >> bole1;
+						totalBoletos = bole1 + bole2;
+						
+						boletoAdulto = 6500;
+					}
+			
+			do{
+				cout << "Digite letra de la Fila: "; cin >> letra;
+				switch (letra) {
+				case 'A': case 'a':
+					fila = 0;
+					break;
+				case 'B': case 'b':
+					fila = 1;
+					break;
+				case 'C':case 'c':
+					fila = 2;
+					break;
+				case 'D': case 'd':
+					fila = 3;
+					break;
+				case 'E':case 'e':
+					fila = 4;
+					break;
+				case 'F': case 'f':
+					fila = 5;
+					break;
+
+				default:
+					break;
+				}
+				cout << "Digite la columna: "; cin >> colum;
+				if (ptrCinema->obtnerElemento(sala)->obtenerCole()->reservar(fila, colum)) {
+					cout << "Reserva exitosa" << endl;
+					contador++;
+				}
+				else{
+					cout << "El asiento ya esta reservado" << endl;
+				}
+			} while (contador < totalBoletos);
+			system("cls");
+			cout << "\t******************************************************" << endl;
+			cout << "\t*                     Tiqueteria                     *" << endl;
+			cout << "\t******************************************************" << endl;
+			cout << "Factura: " << endl;
+			cout << endl;
+			cout << "ASIENTO SELECIONADOS: " << endl;
+			cout << endl;
+			cout << ptrCinema->obtnerElemento(sala)->toString();
+			cout << endl;
+			total = totalBoletos* ()
+			cout<< "Total a pagar ............................... "<<total
+
+
+
+
+			
+
+
+
+			
+
+
+			
+
+			
 			
 
 			break;
