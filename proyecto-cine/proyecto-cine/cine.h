@@ -13,18 +13,18 @@ private:
 	string dimension;
 	string sinopsis;
 	string pais;
-	short tipoPublico;
+	string tipoPublico;
 	short anio;
 public:
 	//constructor por defecto
 	Pelicula() {
-		nombre = " ";
-		genero = " ";
-		tipo = " ";
-		dimension = " ";
-		sinopsis = " ";
+		nombre = "";
+		genero = "";
+		tipo = "";
+		dimension = "";
+		sinopsis = "";
 		pais = " ";
-		tipoPublico = 0;
+		tipoPublico = "";
 		anio = 0;
 		
 
@@ -34,10 +34,16 @@ public:
 		genero = pGenero;
 		tipo = pClasi;
 		dimension = pDimen;
-		tipoPublico = pTipo;
 		sinopsis = pSinop;
 		pais = pPais;
 		anio = pAnio;
+		if (pTipo == 1) {
+			tipoPublico = "adultos";
+			
+		}
+		else {
+			tipoPublico = "ninos";
+		}
 
 	} // constructor con parametros
 
@@ -68,7 +74,7 @@ public:
 	void setAnio(short pAno) {
 		anio = pAno;
 	}
-	void setTipoPublico(short pTipoP) {
+	void setTipoPublico(string pTipoP) {
 		tipoPublico = pTipoP;
 	}
 	//metodos get
@@ -93,7 +99,7 @@ public:
 	string getDimension() {
 		return dimension;
 	}
-	short getTipoPublico() {
+	string getTipoPublico() {
 		return tipoPublico;
 	}
 	string toString() {
@@ -117,8 +123,9 @@ public:
 
 };
 class Asiento {
-public:
 	string estado;
+public:
+	
 
 
 	Asiento() {
@@ -135,6 +142,11 @@ public:
 
 	string getEstado() {
 		return estado;
+	}
+	string toString() {
+		stringstream a;
+		a << estado;
+		return a.str();
 	}
 
 };
@@ -208,32 +220,22 @@ public:
 
 class Coleccion {
 private:
-	Asiento*** matriz;
+	Asiento matriz[10][10];
 	short filas;
 	short columnas;
 public:
 	Coleccion() {
 		filas = 6;
 		columnas = 10;
-		matriz = new Asiento * *[filas];
-		for (short i = 0; i < filas; i++)
-			matriz[i] = new Asiento * [columnas];
-		for (short f = 0; f < filas; f++) {
-			for (short c = 0; c < columnas; c++) {
-				matriz[f][c] = NULL;
-			}
-		}
 	}
-
 	
-	void insertarAsientos(Asiento* pAsiento) {
+	void insertarAsientos(Asiento pAsiento) {
 		
 		
 		for (short i = 0; i < filas; i++) {
 			for (short j = 0; j < columnas; j++) {
-				if (matriz[i][j] == NULL) {
-					matriz[i][j] = pAsiento;
-				}
+				matriz[i][j] = pAsiento;
+				
 			}
 		}
 	}
@@ -241,36 +243,33 @@ public:
 		stringstream m;
 		char letras[6];
 
-		m << "---------------------Pantalla--------------------" << endl;
+		m << "------------------------Pantalla-----------------------" << endl;
 		m << endl;
-
+		m << "     " << "(1)  " << "(2)  " << "(3)  " << "(4)  " << "(5)  " << "(6)  " << "(7)  " << "(8)  " << "(9)  " << "(10)  " << endl;
+		
+		
 		for (short i = 0; i < filas; i++) {
 			letras[i] = i + 65;
 			m << endl;
 			m << "[" << letras[i] << "]" << "  ";
 			for (short j = 0; j < columnas; j++) {
-				m << "[" << matriz[i][j]->getEstado() << "]" << "  ";
+				m << "[" << matriz[i][j].toString() << "]" << "  ";
 			}
 			m << endl;
 		}
 		return m.str();
 	}
 
-	bool reservar(short pFill, short pColumm) {
-
-		if (matriz[pFill][pColumm]->getEstado() == "O") {
-			matriz[pFill][pColumm]->setEstado("X");
+	void reservar(short pFill, short pColumm) {
+		pColumm = pColumm - 1;
+		if (matriz[pFill][pColumm].getEstado() == "O") {
+			matriz[pFill][pColumm].setEstado("X");
 			cout << "Reserva exitosa" << endl;
-			return true;
+
 		}
 		else {
 			cout << "El asiento ya esta reservado" << endl;
-			return false;
 		}
-	}
-
-	Asiento*** obtenerMatriz() {
-		return matriz;
 	}
 
 };
@@ -284,9 +283,15 @@ private:
 	Coleccion* ptrCole;
 public:
 
-	Sala(short pnum, string pSala) {
+	Sala(short pnum, short pSala) {
 		numeroSala = 0;
-		tipoSala = "";
+		if (pSala == 1) {
+			tipoSala = "VIP";
+		}
+		else {
+			tipoSala = "VIP";
+		}
+		
 		ptrFun = NULL;
 		ptrCole = NULL;
 	}
@@ -334,6 +339,7 @@ public:
 
 		return t.str();
 	}
+	
 };
 
 class Cinema {

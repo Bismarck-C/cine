@@ -1,4 +1,5 @@
 #include "cine.h"
+#include <sstream>
 
 int main() {
 	Pelicula* objPeli = NULL;
@@ -6,7 +7,7 @@ int main() {
 	Sala* ptrSala1 = NULL;
 	Sala* ptrSala2 = NULL;
 	Coleccion* ptrCole = NULL;
-	Asiento* ptrAsiento = NULL;
+	Asiento ptrAsiento;
 	Cinema* ptrCinema = NULL;
 
 	Sala* auxSala = NULL;
@@ -16,9 +17,12 @@ int main() {
 
 	short cont = 0, cont2 = 0, cont3 = 0, opc, tan, numSa, sala, insertar;
 	short contador = 0;
-	string auxTanda, auxHora, auxDia, tipSa;
+	string auxTanda, auxHora, auxDia;
 	string nom, gene, tipo, dimen, sinopsis, pais;
-	short tipoPublico, annio;
+	short tipoPublico, annio, tipSa;
+	char letra;
+	short fila = 0, colum;
+	
 	do {
 		system("cls");
 		cout << "\t******************************************************" << endl;
@@ -41,10 +45,13 @@ int main() {
 		case 1:
 
 			do{
+				system("cls");
 				cout << "Digite el numero de sala a crear: "; cin >> sala;
-				cout << "Digite el tipo de sala: "; cin >> tipSa;
+				cout << "Digite el tipo de sala: " << endl;
+				cout << "[1]............VIP" << endl;
+				cout << "[2]............Normal" << endl;
+				cout << "Opcion: ";  cin >> tipSa;
 				if (sala == 1) {
-					ptrAsiento = new Asiento;
 					ptrCole = new Coleccion;
 					ptrCole->insertarAsientos(ptrAsiento);
 					ptrSala1 = new Sala(sala, tipSa);
@@ -54,7 +61,6 @@ int main() {
 
 				}
 				else if (sala == 2) {
-					ptrAsiento = new Asiento;
 					ptrCole = new Coleccion;
 					ptrCole->insertarAsientos(ptrAsiento);
 					ptrSala2 = new Sala(sala, tipSa);
@@ -68,11 +74,11 @@ int main() {
 					cout << "Error! numero de sala incorrecto, digite un valor valido!" << endl;
 
 				}
+				
 				system("pause");
-				system("cls");
 
 			} while (sala >= 3);
-
+			
 			
 		
 
@@ -129,29 +135,56 @@ int main() {
 				ptrCinema->insertar(ptrSala2, insertar);
 
 			}
-			//ptrCinema->obtnerElemento(insertar)->insertarFuncion(ptrFuncion);
-			//ptrCinema->obtnerElemento(insertar)->obtenerFuncion()->insertarPelicula(objPeli);
 
 			break;
 		case 3:
 			cout << ptrCinema->toString();
-		
+			system("pause");
 
 			break;
 		case 4:
-			short fill, columm;
+			cout << "Digite el Numero de sala: "; cin >> sala;
+			cout<< ptrCinema->obtnerElemento(sala)->toString();
+			
+			
 
-			cout << "Digite la fila: "; cin >> fill;
-			cout << "Digite la columna: "; cin >> columm;
-			ptrCole->reservar(fill, columm);
+
+			cout << "Digite letra de la Fila: "; cin >> letra;
+			switch (letra){
+			case 'A': case 'a':
+				fila = 0;
+				break;
+			case 'B': case 'b':
+				fila = 1;
+				break;
+			case 'C':case 'c':
+				fila = 2;
+				break;
+			case 'D': case 'd':
+				fila = 3;
+				break;
+			case 'E':case 'e':
+				fila = 4;
+				break;
+			case 'F': case 'f':
+				fila = 5;
+				break;
+				
+			default:
+				break;
+			}
+			cout << "Digite la columna: "; cin >> colum;
+			ptrCinema->obtnerElemento(sala)->obtenerCole()->reservar(fila, colum);
+			
 
 			break;
 		case 5:
 			break;
 		}
 
-		system("pause");
-		system("cls");
+
+		
+		
 
 	} while (opc < 6);
 
