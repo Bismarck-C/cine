@@ -264,12 +264,10 @@ public:
 		pColumm = pColumm - 1;
 		if (matriz[pFill][pColumm].getEstado() == "O") {
 			matriz[pFill][pColumm].setEstado("X");
-			cout << "Reserva exitosa" << endl;
 			return true;
 
 		}
 		else {
-			cout << "El asiento ya esta reservado" << endl;
 			return false;
 		}
 	}
@@ -285,8 +283,8 @@ private:
 	Coleccion* ptrCole;
 public:
 
-	Sala(short pnum, short pSala) {
-		numeroSala = 0;
+	Sala(short pNum, short pSala) {
+		numeroSala = pNum;
 		if (pSala == 1) {
 			tipoSala = "VIP";
 		}
@@ -331,6 +329,7 @@ public:
 
 	string toString() {
 		stringstream t;
+		t << "Numero de sala: " << numeroSala << endl;
 		t << "Tipo de sala: " << tipoSala << endl;
 		t << "Funcion: "<<obtenerFuncion()->getTanda()<<endl;
 		t << "Hora de la Funcion: " << obtenerFuncion()->getHora() << endl;

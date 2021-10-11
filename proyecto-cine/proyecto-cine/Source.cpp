@@ -161,6 +161,11 @@ int main() {
 			cout << "\t*                     Tiqueteria                     *" << endl;
 			cout << "\t******************************************************" << endl;
 			cout << endl;
+			cout << "DISPOBIBLES = O" << endl;
+			cout << "OCUPADOS = X" << endl;
+			cout << endl;
+			cout << endl;
+
 
 
 			cout<< ptrCinema->obtnerElemento(sala)->toString();
@@ -178,10 +183,12 @@ int main() {
 				cout << "\t*                Apta para todo publico              *" << endl;
 				cout << "\t******************************************************" << endl;
 				cout << endl;
+				cout << "Valor de la entrada adulto: " << boletoAdulto << endl;
+				cout << "Valor de la entrada ninos: " << boletosNi << endl;
 				cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
-				cout << "Digite cuantos boletos adulto: "; cin >> bole1;
+				cout << "Digite cuantos boletos adulto: "; cin >> bole2;
 				totalBoletos = bole1 + bole2;
-
+				total = (boletosNi * bole1) + (bole2 * boletoAdulto);
 
 
 
@@ -194,9 +201,13 @@ int main() {
 					cout << "\t*                Apta para todo publico              *" << endl;
 					cout << "\t******************************************************" << endl;
 					cout << endl;
+					cout << "Valor de la entrada adulto: " << boletoAdulto << endl;
+					cout << "Valor de la entrada ninos: " << boletosNi << endl;
 					cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
-					cout << "Digite cuantos boletos adulto: "; cin >> bole1;
+					cout << "Digite cuantos boletos adulto: "; cin >> bole2;
 					totalBoletos = bole1 + bole2;
+					total = (boletosNi* bole1) + ( bole2 * boletoAdulto );
+
 
 
 				}
@@ -207,18 +218,21 @@ int main() {
 						cout << "\t*                Apta solo para aultos               *" << endl;
 						cout << "\t******************************************************" << endl;
 						cout << endl;
-						cout << "Digite cuantos boletos para adulto: "; cin >> bole1;
-						totalBoletos = bole1 + bole2;
+						cout << "Valor de la entrada: " << boletoAdulto << endl;
+						cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
+						totalBoletos = bole2;
+						total = totalBoletos * boletoAdulto;
 					}
 					else {
+						boletoAdulto = 6500;
 						cout << "\t******************************************************" << endl;
 						cout << "\t*                Apta solo para aultos               *" << endl;
 						cout << "\t******************************************************" << endl;
 						cout << endl;
-						cout << "Digite cuantos boletos para adulto: "; cin >> bole1;
-						totalBoletos = bole1 + bole2;
-						
-						boletoAdulto = 6500;
+						cout << "Valor de la entrada: " << boletoAdulto << endl;
+						cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
+						totalBoletos = bole2;
+						total = totalBoletos * boletoAdulto;
 					}
 			
 			do{
@@ -252,35 +266,33 @@ int main() {
 					contador++;
 				}
 				else{
-					cout << "El asiento ya esta reservado" << endl;
+					cout << "El asiento ya esta reservado, digite otro!" << endl;
+
 				}
-			} while (contador < totalBoletos);
+			}while (contador != totalBoletos);
+			contador = 0;
 			system("cls");
 			cout << "\t******************************************************" << endl;
 			cout << "\t*                     Tiqueteria                     *" << endl;
 			cout << "\t******************************************************" << endl;
-			cout << "Factura: " << endl;
+			
+			cout << endl;
+			cout << endl;
+			cout << "\t******************************************************" << endl;
+			cout << "\t*                     Factura                        *" << endl;
+			cout << "\t******************************************************" << endl;
 			cout << endl;
 			cout << "ASIENTO SELECIONADOS: " << endl;
+			cout << ptrCinema->obtnerElemento(sala)->obtenerCole()->toString();
 			cout << endl;
-			cout << ptrCinema->obtnerElemento(sala)->toString();
 			cout << endl;
-			total = totalBoletos* ()
-			cout<< "Total a pagar ............................... "<<total
+			cout << "Asientos para adultos: ........................." << bole2 << endl;
+			cout << "Asientos para ninos:   ........................." << bole1 << endl;
+			cout << "Total a pagar:         ........................." << total << endl;
+			bole1 = 0;
+			bole2 = 0;
+			system("pause");
 
-
-
-
-			
-
-
-
-			
-
-
-			
-
-			
 			
 
 			break;
