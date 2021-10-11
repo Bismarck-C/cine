@@ -48,7 +48,6 @@ public:
 	} // constructor con parametros
 
 	~Pelicula() {
-
 	}
 	//metodos set
 	void setNombre(string pNom) {
@@ -125,16 +124,10 @@ public:
 class Asiento {
 	string estado;
 public:
-	
-
-
 	Asiento() {
 		estado = "O";
 	}
-
-
 	~Asiento() {
-
 	};
 	void setEstado(string pEstado) {
 		estado = pEstado;
@@ -159,16 +152,15 @@ private:
 	string tanda;
 
 public:
-	
-
 	Funcion() {
 		objetoP = NULL;
 		hora = "";
 		dia = "";
 		tanda = "";
+	}
 
-	
-	
+	~Funcion() {
+		delete objetoP;
 	}
 
 	void insertarFuncion(string pHora, string pTanda, string pDia) {
@@ -209,13 +201,6 @@ public:
 		return dia;
 
 	}
-
-
-
-
-
-
-
 };
 
 class Coleccion {
@@ -229,6 +214,10 @@ public:
 		columnas = 10;
 	}
 	
+	~Coleccion() {
+
+	}
+
 	void insertarAsientos(Asiento pAsiento) {
 		
 		
@@ -295,6 +284,12 @@ public:
 		ptrFun = NULL;
 		ptrCole = NULL;
 	}
+
+	~Sala() {
+		delete ptrFun;
+		delete ptrCole;
+	}
+
 	void insertarCole(Coleccion* pCole) {
 		ptrCole = pCole;
 		
@@ -355,6 +350,11 @@ public:
 		sala1 = NULL;
 		sala2 = NULL;
 
+	}
+
+	~Cinema() {
+		delete sala1;
+		delete sala2;
 	}
 
 	bool insertar(Sala* ObjSala, short pNUm) {
