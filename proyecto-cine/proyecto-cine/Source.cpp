@@ -17,9 +17,9 @@ int main() {
 
 	float total;
 	short  opc, tan, numSa, sala, insertar;
-	short contador = 0;
+	short contador = 0, activador = 0;
 	string auxTanda, auxHora, auxDia;
-	string nom, gene, tipo, dimen, sinopsis, pais;
+	string nom, gene, tipo, dimen, pais;
 	short tipoPublico, annio, tipSa, totalBoletos, bole1 = 0, bole2 = 0;
 	char letra;
 	short fila = 0, colum;
@@ -33,120 +33,141 @@ int main() {
 		cout << "\t*                     ++Menu++                       *" << endl;
 		cout << "\t******************************************************" << endl;
 		cout << endl;
-		cout << "[1]................................. Insertar Sala." << endl;
-		cout << "[2]................................. Insertar Funcion." << endl;
-		cout << "[3]................................. Mostrar Funciones" << endl;
-		cout << "[4]................................. Generar Tiquete" << endl;
-		cout << "[5]................................. Buscar Pelicula" << endl;
-		cout << "[6]................................. salir" << endl;
+		cout << "[1]................................. Administracion" << endl;
+		cout << "[2]................................. Mostrar Funciones" << endl;
+		cout << "[3]................................. Generar Tiquete" << endl;
+		cout << "[4]................................. Buscar Pelicula" << endl;
+		cout << "[5]................................. salir" << endl;
 		cout << "Elija una de las opciones: ";
 		cin >> opc;
 		system("cls");
 
-		switch (opc)
-		{
+		switch (opc){
 
 		case 1:
-
 			do{
+				cout << "\t**********************************ADIMINISTRACION********************************************" << endl;
+				cout << "[1]................................. Activar tanda e insertar sala" << endl;
+				cout << "[2]................................. Insertar Funcion" << endl;
+				cout << "[3]................................. Activar nueva tanda (solo usar si ya hay tandas activas)" << endl;
+				cout << "[4]................................. Salir a menu principal" << endl;
+				cout << "Opcion-> "; cin >> opc;
+
+				switch (opc) {
+				case 1:
+					if (activador == 0) {
+						do {
+
+							cout << "Digite la tanda: " << endl;
+							cout << "1. manana " << endl;
+							cout << "2. tarde " << endl;
+							cout << "3. noche " << endl;
+							cout << "Opcion: "; cin >> tan;
+						} while (tan > 3);
+						activador = 1;
+					}
+
+					do {
+						system("cls");
+						cout << "Digite el numero de sala a crear: "; cin >> sala;
+						cout << "Digite el tipo de sala: " << endl;
+						cout << "[1]............VIP" << endl;
+						cout << "[2]............Normal" << endl;
+						cout << "Opcion: ";  cin >> tipSa;
+						if (sala == 1) {
+							ptrCole = new Coleccion;
+							ptrCole->insertarAsientos(ptrAsiento);
+							ptrSala1 = new Sala(sala, tipSa);
+							ptrSala1->insertarCole(ptrCole);
+							cout << "Se creo con exito la sala!" << endl;
+
+
+						}
+						else if (sala == 2) {
+							ptrCole = new Coleccion;
+							ptrCole->insertarAsientos(ptrAsiento);
+							ptrSala2 = new Sala(sala, tipSa);
+							ptrSala2->insertarCole(ptrCole);
+							cout << "Se creo con exito la sala!" << endl;
+
+
+
+						}
+						else {
+							cout << "Error! numero de sala incorrecto, digite un valor valido!" << endl;
+
+						}
+
+						system("pause");
+
+					} while (sala >= 3);
+					break;
+
+				case 2:
+					cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
+
+					switch (tan)
+					{
+					case 1:
+						auxTanda = "manana";
+						break;
+					case 2:
+						auxTanda = "tarde";
+						break;
+					case 3:
+						auxTanda = "Noche";
+						break;
+					}
+					cout << endl;
+
+					cout << "Digite la hora de la Funcion: "; cin >> auxHora;
+					cout << "Digite el dia de la funcion: "; cin >> auxDia;
+
+					objPeli = new Pelicula;
+					ptrFuncion = new Funcion;
+					cout << "\nDigite el nombre de la Pelicula: "; cin >> nom;
+					cout << "Digite el genero de la pelicula: "; cin >> gene;
+					cout << "Digite el Tipo: "; cin >> tipo;
+					cout << "Digite el la dimension de la pelicula: "; cin >> dimen;
+					cout << "Digite el pais de la pelicula: "; cin >> pais;
+					cout << "Digite el anio de la pelicula: "; cin >> annio;
+					cout << "Digite el nuemero de tipo de publico 1 =*adulto* o 2 = *ninos*: "; cin >> tipoPublico;
+					objPeli->insertarPelicula(nom, gene, tipo, dimen, pais, annio, tipoPublico);
+					ptrFuncion->insertarFuncion(auxHora, auxTanda, auxDia);
+					ptrFuncion->insertarPelicula(objPeli);
+					if (insertar == 1) {
+						ptrSala1->insertarFuncion(ptrFuncion);
+						ptrCinema->insertar(ptrSala1, insertar);
+					}
+					else {
+						ptrSala2->insertarFuncion(ptrFuncion);
+						ptrCinema->insertar(ptrSala2, insertar);
+
+					}
+
+
+					break;
+				case 3:
+					activador = 0;
+
+					break;
+				default:
+					cout << "Opcion invalida! " << endl;
+					break;
+				}
 				system("cls");
-				cout << "Digite el numero de sala a crear: "; cin >> sala;
-				cout << "Digite el tipo de sala: " << endl;
-				cout << "[1]............VIP" << endl;
-				cout << "[2]............Normal" << endl;
-				cout << "Opcion: ";  cin >> tipSa;
-				if (sala == 1) {
-					ptrCole = new Coleccion;
-					ptrCole->insertarAsientos(ptrAsiento);
-					ptrSala1 = new Sala(sala, tipSa);
-					ptrSala1->insertarCole(ptrCole);
-					cout << "Se creo con exito la sala!" << endl;
 
-
-				}
-				else if (sala == 2) {
-					ptrCole = new Coleccion;
-					ptrCole->insertarAsientos(ptrAsiento);
-					ptrSala2 = new Sala(sala, tipSa);
-					ptrSala2->insertarCole(ptrCole);
-					cout << "Se creo con exito la sala!" << endl;
-
-
-
-				}
-				else {
-					cout << "Error! numero de sala incorrecto, digite un valor valido!" << endl;
-
-				}
-				
-				system("pause");
-
-			} while (sala >= 3);
+			} while (opc != 4);
 			
-			
-		
 
 
 			break;
 		case 2:
-			
-			cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
-			do {
-				cout << "Digite la tanda: " << endl;
-				cout << "1. manana " << endl;
-				cout << "2. tarde " << endl;
-				cout << "3. noche " << endl;
-				cout << "Opcion: "; cin >> tan;
-			} while (tan > 3);
-			cout << endl;
-
-			switch (tan)
-			{
-			case 1:
-				auxTanda = "manana";
-				break;
-			case 2:
-				auxTanda = "tarde";
-				break;
-			case 3:
-				auxTanda = "Noche";
-				break;
-			}
-			cout << endl;
-
-			cout << "Digite la hora de la Funcion: "; cin >> auxHora;
-			cout << "Digite el dia de la funcion: "; cin >> auxDia;
-
-			objPeli = new Pelicula;
-			ptrFuncion = new Funcion;
-			cout << "\nDigite el nombre de la Pelicula: "; cin >> nom;
-			cout << "Digite el genero de la pelicula: "; cin >> gene;
-			cout << "Digite el Tipo: "; cin >> tipo;
-			cout << "Digite el la dimension de la pelicula: "; cin >> dimen;
-			cout << "Digite la sinopsis de la pelicula: "; cin >> sinopsis;
-			cout << "Digite el pais de la pelicula: "; cin >> pais;
-			cout << "Digite el anio de la pelicula: "; cin >> annio;
-			cout << "Digite el nuemero de tipo de publico 1 =*adulto* o 2 = *ninos*: "; cin >> tipoPublico;
-			objPeli->insertarPelicula(nom, gene, tipo, dimen, sinopsis, pais, annio, tipoPublico);
-			ptrFuncion->insertarFuncion(auxHora, auxTanda, auxDia);
-			ptrFuncion->insertarPelicula(objPeli);
-			if (insertar == 1) {
-				ptrSala1->insertarFuncion(ptrFuncion);
-				ptrCinema->insertar(ptrSala1, insertar);
-			}
-			else {
-				ptrSala2->insertarFuncion(ptrFuncion);
-				ptrCinema->insertar(ptrSala2, insertar);
-
-			}
-
-			break;
-		case 3:
 			cout << ptrCinema->toString();
 			system("pause");
-
+			
 			break;
-		case 4:
+		case 3:
 
 			cout << "\t******************************************************" << endl;
 			cout << "\t*                     Tiqueteria                     *" << endl;
@@ -285,6 +306,7 @@ int main() {
 			cout << ptrCinema->obtnerElemento(sala)->obtenerCole()->toString();
 			cout << endl;
 			cout << endl;
+			cout << ptrCinema->obtnerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->toString() << endl;
 			cout << "Asientos para adultos: ........................." << bole2 << endl;
 			cout << "Asientos para ninos:   ........................." << bole1 << endl;
 			cout << "Total a pagar:         ........................." << total << endl;
