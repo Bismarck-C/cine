@@ -11,7 +11,6 @@ private:
 	string genero;
 	string tipo;
 	string dimension;
-	string sinopsis;
 	string pais;
 	string tipoPublico;
 	short anio;
@@ -22,19 +21,17 @@ public:
 		genero = "";
 		tipo = "";
 		dimension = "";
-		sinopsis = "";
 		pais = " ";
 		tipoPublico = "";
 		anio = 0;
 		
 
 	}
-	void insertarPelicula(string pNom, string pGenero, string pClasi, string pDimen, string pSinop, string pPais, short pAnio, short pTipo) {
+	void insertarPelicula(string pNom, string pGenero, string pClasi, string pDimen, string pPais, short pAnio, short pTipo) {
 		nombre = pNom;
 		genero = pGenero;
 		tipo = pClasi;
 		dimension = pDimen;
-		sinopsis = pSinop;
 		pais = pPais;
 		anio = pAnio;
 		if (pTipo == 1) {
@@ -65,9 +62,6 @@ public:
 		dimension = pDimen;
 
 	}
-	void setSinopsis(string Psinopsis) {
-		sinopsis = Psinopsis;
-	}
 	void setPais(string pPa) {
 		pais = pPa;
 	}
@@ -86,9 +80,6 @@ public:
 	}
 	string getTipo() {
 		return tipo;
-	}
-	string getSinopsis() {
-		return sinopsis;
 	}
 	string getPais() {
 		return pais;
@@ -110,7 +101,6 @@ public:
 		s << " Genero: " << this->genero << endl;
 		s << " Tipo: " << this->tipo << endl;
 		s << " Dimension: " << this->dimension << endl;
-		s << " Sinopsis: " << this->sinopsis << endl;
 		s << " Pais: " << this->pais << endl;
 		s << " Anio: " << this->anio << endl;
 		s << " Publico: " << this->tipoPublico << endl;
@@ -256,7 +246,9 @@ public:
 				m << "[" << matriz[i][j].toString() << "]" << "  ";
 			}
 			m << endl;
+
 		}
+		m << "**************************************************************" << endl;
 		return m.str();
 	}
 
