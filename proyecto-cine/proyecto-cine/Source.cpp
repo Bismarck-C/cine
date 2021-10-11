@@ -167,7 +167,6 @@ int main() {
 			cout << endl;
 
 
-
 			cout<< ptrCinema->obtnerElemento(sala)->toString();
 
 			
