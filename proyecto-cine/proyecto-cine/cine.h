@@ -6,7 +6,7 @@ using namespace std;
 // creacion de clase para crear objetos de tipo pelicula
 class Pelicula {
 
-private:
+private: //atributos
 	string nombre;
 	string genero;
 	string tipo;
@@ -16,7 +16,7 @@ private:
 	short anio;
 public:
 	//constructor por defecto
-	Pelicula() {
+	Pelicula() {//defecto
 		nombre = "";
 		genero = "";
 		tipo = "";
@@ -27,7 +27,7 @@ public:
 		
 
 	}
-	void insertarPelicula(string pNom, string pGenero, string pClasi, string pDimen, string pPais, short pAnio, short pTipo) {
+	void insertarPelicula(string pNom, string pGenero, string pClasi, string pDimen, string pPais, short pAnio, short pTipo) {//por parametros
 		nombre = pNom;
 		genero = pGenero;
 		tipo = pClasi;
@@ -45,6 +45,7 @@ public:
 	} // constructor con parametros
 
 	~Pelicula() {
+
 	}
 	//metodos set
 	void setNombre(string pNom) {
@@ -93,6 +94,7 @@ public:
 		return tipoPublico;
 	}
 	string toString() {
+		//se mustran los atributos
 		stringstream s;
 		s << "********************************************" << endl;
 		s << "Pelicula: " << endl;
@@ -118,7 +120,8 @@ public:
 		estado = "O";
 	}
 	~Asiento() {
-	};
+
+	}
 	void setEstado(string pEstado) {
 		estado = pEstado;
 	}
@@ -136,7 +139,7 @@ public:
 
 class Funcion {
 private:
-	Pelicula* objetoP;
+	Pelicula* objetoP; //puntero a peliculas
 	string hora;
 	string dia;
 	string tanda;
@@ -150,7 +153,8 @@ public:
 	}
 
 	~Funcion() {
-		delete objetoP;
+		objetoP->~Pelicula();
+		objetoP = NULL;
 	}
 
 	void insertarFuncion(string pHora, string pTanda, string pDia) {
@@ -160,10 +164,15 @@ public:
 		dia = pDia;
 	}
 	void insertarPelicula(Pelicula* pObj) {
-		objetoP = pObj;
+		if (objetoP == NULL) {
+			objetoP = pObj;
+		}
+		else {
+			cout << "No se puede insertar pelicula!" << endl;
+		}
 	}
 
-	Pelicula* ObtenerPelicula() {
+	Pelicula* ObtenerPelicula() {// retorna la posicion de memoria del objeto de pelicula
 		return objetoP;
 	
 	}
@@ -195,7 +204,7 @@ public:
 
 class Coleccion {
 private:
-	Asiento matriz[10][10];
+	Asiento matriz[10][10];//matriz estatica
 	short filas;
 	short columnas;
 public:
@@ -205,7 +214,12 @@ public:
 	}
 	
 	~Coleccion() {
+		for (short i = 0; i < filas; i++) {
+			for (short j = 0; j < columnas; j++) {
+				matriz[i][j].~Asiento();// se borran los asientos
 
+			}
+		}
 	}
 
 	void insertarAsientos(Asiento pAsiento) {
@@ -213,14 +227,14 @@ public:
 		
 		for (short i = 0; i < filas; i++) {
 			for (short j = 0; j < columnas; j++) {
-				matriz[i][j] = pAsiento;
+				matriz[i][j] = pAsiento; //se insertan los asientos
 				
 			}
 		}
 	}
 	string toString() {
 		stringstream m;
-		char letras[6];
+		char letras[6]; // se crea un char para mostrar las columnas
 
 		m << "------------------------Pantalla-----------------------" << endl;
 		m << endl;
@@ -228,7 +242,7 @@ public:
 		
 		
 		for (short i = 0; i < filas; i++) {
-			letras[i] = i + 65;
+			letras[i] = i + 65; // en este valor se muestran las letras A, B, C...
 			m << endl;
 			m << "[" << letras[i] << "]" << "  ";
 			for (short j = 0; j < columnas; j++) {
@@ -278,25 +292,38 @@ public:
 	}
 
 	~Sala() {
-		delete ptrFun;
-		delete ptrCole;
+		ptrFun->~Funcion();
+		ptrCole->~Coleccion();
+		ptrFun = NULL;
+		ptrCole = NULL;
 	}
 
 	void insertarCole(Coleccion* pCole) {
-		ptrCole = pCole;
+		if (ptrCole == NULL) {
+			ptrCole = pCole;
+		}
+		else {
+			cout << "No se puede insertar!" << endl;
+		}
+		
+
 		
 	}
 
 	void insertarFuncion(Funcion* objFun) {
-		ptrFun = objFun;
+		if (ptrFun == NULL) {
+			ptrFun = objFun;
+		}
+		else {
+			cout << "No se puede insertar!" << endl;
+		}
 
 	}
-	Funcion* obtenerFuncion() {
+	Funcion* obtenerFuncion() {//se retorna el puntero de funcion
 		return ptrFun;
 	}
 	Coleccion* obtenerCole() {
 		return ptrCole;
-
 	}
 
 	void setNumSala(short pNum) {
@@ -318,7 +345,7 @@ public:
 		stringstream t;
 		t << "Numero de sala: " << numeroSala << endl;
 		t << "Tipo de sala: " << tipoSala << endl;
-		t << "Funcion: "<<obtenerFuncion()->getTanda()<<endl;
+		t << "Funcion: "<<obtenerFuncion()->getTanda()<<endl;//a travez de cada funcion de retornar se ingresa a las funciones
 		t << "Hora de la Funcion: " << obtenerFuncion()->getHora() << endl;
 		t << "Dia de la Funcion: " << obtenerFuncion()->getDia() << endl;
 		t << obtenerFuncion()->ObtenerPelicula()->toString()<<endl;
@@ -345,16 +372,22 @@ public:
 	}
 
 	~Cinema() {
-		delete sala1;
-		delete sala2;
+		if (sala1 != NULL) {
+			sala1->~Sala();
+		}
+		else if (sala2 != NULL) {
+			sala2->~Sala();
+		}
+		sala1 = NULL;
+		sala2 = NULL;
 	}
 
 	bool insertar(Sala* ObjSala, short pNUm) {
-		if (pNUm == 1) {
+		if (pNUm == 1 && sala1 == NULL) {
 			sala1 = ObjSala;
 			return true;
 		}
-		else if(pNUm == 2){
+		else if(pNUm == 2 && sala2 == NULL){
 			sala2 = ObjSala;
 			return true;
 		}
@@ -366,10 +399,20 @@ public:
 
 	string toString() {
 		stringstream b;
-		if(sala1 != NULL)
+		if (sala1 != NULL) {
 			b << sala1->toString() << endl;
-		if (sala2 != NULL)
+		}
+		else {
+			b << "Sala 1 no deponible por el momento o no se han insertado funciones!" << endl;
+		}
+			
+		if (sala2 != NULL) {
 			b << sala2->toString() << endl;
+		}
+		else {
+			b << "Sala 2 no deponible por el momento o no se han insertado funciones!" << endl;
+		}
+		
 
 
 
@@ -377,12 +420,35 @@ public:
 	}
 
 
-	Sala* obtnerElemento(short pNum) {
-		if (pNum == 1) {
+	Sala* obtenerElemento(short pNum) {
+		if (pNum == 1 && sala1 != NULL) {
 			return sala1;
 		}else
-			return sala2;
+			if (pNum == 2 && sala1 != NULL) {
+				return sala2;
+			}
+			else {
+				return NULL;
+			}
 		
+	}
+	Sala* buscarSala1() {
+		if (sala1 != NULL) {
+			return sala1;
+		}
+		else {
+			return NULL;
+		}
+
+
+	}
+	Sala* buscarSala2() {
+		if (sala1 != NULL) {
+			return sala1;
+		}
+		else {
+			return NULL;
+		}
 	}
 
 
