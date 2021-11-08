@@ -34,7 +34,7 @@ int main() {
 	string nom, gene, tipo, dimen, pais; 
 	short tipoPublico;
 	//varaibles para tiqueteria
-	short totalBoletos, bole1 = 0, bole2 = 0, fila, colum;;
+	short totalBoletos, bole1 = 0, bole2 = 0, fila, colum, numFun, busq = 0;
 	char letra;
 	float total, boletoAdulto, boletosNi;
 	
@@ -61,25 +61,22 @@ int main() {
 			do {
 
 				cout << "\t**********************************ADIMINISTRACION********************************************" << endl;
-				cout << "[1]................................. Activar tanda e insertar sala" << endl;
+				cout << "[0]................................. Activar tanda(Inicio)" << endl;
+				cout << "[1]................................. insertar sala" << endl;
 				cout << "[2]................................. Insertar Funcion" << endl;
 				cout << "[3]................................. Activar nueva tanda (solo usar si ya hay tandas activas)" << endl;
 				cout << "[4]................................. Salir a menu principal" << endl;
 				cout << "Opcion-> "; cin >> opc;
 
 				switch (opc) {
+				case 0:
+					cout << "Digite la tanda para activar ventas " << endl;
+					cout << "[1]................................. manana" << endl;
+					cout << "[2]................................. tarde" << endl;
+					cout << "[3]................................. noche" << endl;
+					cout << "Opcion: "; cin >> activador;
+					break;
 				case 1:
-					if (activador == 0) {
-						do {
-
-							cout << "Digite la tanda: " << endl;
-							cout << "1. manana " << endl;
-							cout << "2. tarde " << endl;
-							cout << "3. noche " << endl;
-							cout << "Opcion: "; cin >> tan;
-						} while (tan > 3); // se guarda la tanda que se realizara y se verifica que sea una valida
-						activador = 1;
-					}
 
 					do {
 						conta++;
@@ -121,8 +118,16 @@ int main() {
 					break;
 
 				case 2:
-					//se crean la duncion para la sala
+					//se crean la funcion para la sala
 					cout << "Digite el numero de sala a ingresar la funcion: "; cin >> insertar;
+					do {
+
+						cout << "Digite la tanda: " << endl;
+						cout << "1. manana " << endl;
+						cout << "2. tarde " << endl;
+						cout << "3. noche " << endl;
+						cout << "Opcion: "; cin >> tan;
+					} while (tan > 3); 
 
 					switch (tan)
 					{
@@ -133,7 +138,7 @@ int main() {
 						auxTanda = "tarde";
 						break;
 					case 3:
-						auxTanda = "Noche";
+						auxTanda = "noche";
 						break;
 					}
 					cout << endl;
@@ -154,28 +159,39 @@ int main() {
 					ptrFuncion->insertarFuncion(auxHora, auxTanda, auxDia);
 					ptrFuncion->insertarPelicula(objPeli); //se inserta la pelicula ya creada a la funcion
 					if (insertar == 1) {
-						ptrSala1->insertarFuncion(ptrFuncion); // se inserta la funcion a la sala
-						if (ptrCinema->insertar(ptrSala1, insertar)) {
-							cout << "Se inserto correctamente la sala!" << endl;
+						if (ptrSala1->insertarFuncion(ptrFuncion)) {
+							if (ptrCinema->insertar(ptrSala1, insertar)) {
+								cout << "Se inserto correctamente la sala!" << endl;
+							}
+							else {
+								cout << "Error! no se pueden insertar mas salas o dato ingresado erroneo!" << endl;
+							}
+						
 						}
 						else {
-							cout << "Error! no se pueden insertar mas salas o dato ingresado erroneo!" << endl;
-						}
+							cout << "No se pueden insertar mas funciones a la sala!" << endl;
+						} // se inserta la funcion a la sala
+						
 					}
 					else {
-						ptrSala2->insertarFuncion(ptrFuncion);
-						ptrCinema->insertar(ptrSala2, insertar);
-						if (ptrCinema->insertar(ptrSala1, insertar)) {
-							cout << "Se inserto correctamente la sala!" << endl;
+						if (ptrSala2->insertarFuncion(ptrFuncion)) {
+							if (ptrCinema->insertar(ptrSala2, insertar)) {
+								cout << "Se inserto correctamente la sala!" << endl;
+							}
+							else {
+								cout << "Error! no se pueden insertar mas salas o dato ingresado erroneo!" << endl;
+							}
+
+						
 						}
 						else {
-							cout << "Error! no se pueden insertar mas salas o dato ingresado erroneo!" << endl;
+							cout << "No se pueden insertar mas funciones a la sala!" << endl;
+						
 						}
+	
 
 
 					}
-
-
 					break;
 				case 3:
 					activador = 0;
@@ -204,17 +220,50 @@ int main() {
 
 			break;
 		case 3:
-
+			/*if (activador == 1) {
+			
+			}
+			else 
+				if (activador == 2){
+				
+				
+				}
+				else {
+				
+				}*/
 			cout << "\t******************************************************" << endl;
 			cout << "\t*                     Tiqueteria                     *" << endl;
 			cout << "\t******************************************************" << endl;
 			cout << endl;
-			cout << ptrCinema->toString() << endl;
+			//cout << ptrCinema->toString() << endl;
 
 			cout << "Digite el Numero de sala de la pelicula: "; cin >> sala;
 			system("cls");
 			if (ptrCinema->obtenerElemento(sala) != NULL) {
-				cout << ptrCinema->obtenerElemento(sala)->toString();
+				if (activador == 1) {
+					for (short i = 0; i < 3; i++){
+						if (ptrCinema->buscarSala1()->obtenerFuncion(i)->getTanda() == "manana") {
+							cout << ptrCinema->buscarSala1()->obtenerFuncion(i)->toString();
+						}
+					}
+						
+				}
+				else if (activador == 2) {
+					for (short i = 0; i < 3; i++) {
+						if (ptrCinema->obtenerElemento(sala)->obtenerFuncion(i)->getTanda() == "tarde") {
+							cout << ptrCinema->obtenerElemento(sala)->obtenerFuncion(i)->toString();
+						}
+					}
+				
+				}
+				else if (activador == 3) {
+					for (short i = 0; i < 3; i++) {
+						if (ptrCinema->obtenerElemento(sala)->obtenerFuncion(i)->getTanda() == "noche") {
+							cout << ptrCinema->obtenerElemento(sala)->obtenerFuncion(i)->toString();
+						}
+					}
+				}
+				
 				cout << "\t******************************************************" << endl;
 				cout << "\t*                     Tiqueteria                     *" << endl;
 				cout << "\t******************************************************" << endl;
@@ -223,12 +272,13 @@ int main() {
 				cout << "OCUPADOS = X" << endl;
 				cout << endl;
 				cout << endl;
+				cout << "Digite el numero de funcion a alegir: "; cin >> numFun;
 				/*El precio del tiquete depende del tipo de público, y de la sala; si el tipo es niños(as) y la sala regular, el
 			precio del tiquete es ₵3000, si el tipo es niños(as) y la sala VIP, el precio del tiquete es ₵4500. Si el tipo es
 			adultos y la sala regular, el precio del tiquete es ₵5000, si el tipo es adultos y la sala VIP, el precio del tiquete
 			es ₵6500*/
-				cout << "Esta pelicula es para: " << ptrCinema->obtenerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() << endl;
-				if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtenerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "ninos") {
+				cout << "Esta pelicula es para: " << ptrCinema->obtenerElemento(sala)->obtenerFuncion(numFun-1)->ObtenerPelicula()->getTipoPublico() << endl;
+				if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtenerElemento(sala)->obtenerFuncion(numFun-1)->ObtenerPelicula()->getTipoPublico() == "ninos") {
 					boletosNi = 3000;
 					boletoAdulto = 3500; //se crearon nuevos precios
 					cout << "\t******************************************************" << endl;
@@ -246,7 +296,7 @@ int main() {
 
 				}
 				else
-					if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "VIP" && ptrCinema->obtenerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "ninos") {
+					if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "VIP" && ptrCinema->obtenerElemento(sala)->obtenerFuncion(numFun-1)->ObtenerPelicula()->getTipoPublico() == "ninos") {
 						boletosNi = 4500;
 						boletoAdulto = 4800;
 						cout << "\t******************************************************" << endl;
@@ -264,7 +314,7 @@ int main() {
 
 					}
 					else
-						if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtenerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->getTipoPublico() == "adultos") {
+						if (ptrCinema->obtenerElemento(sala)->getTipoSala() == "normal" && ptrCinema->obtenerElemento(sala)->obtenerFuncion(numFun-1)->ObtenerPelicula()->getTipoPublico() == "adultos") {
 							boletoAdulto = 5000;
 							cout << "\t******************************************************" << endl;
 							cout << "\t*                Apta solo para aultos               *" << endl;
@@ -338,7 +388,7 @@ int main() {
 				cout << ptrCinema->obtenerElemento(sala)->obtenerCole()->toString();
 				cout << endl;
 				cout << endl;
-				cout << ptrCinema->obtenerElemento(sala)->obtenerFuncion()->ObtenerPelicula()->toString() << endl;
+				cout << ptrCinema->obtenerElemento(sala)->obtenerFuncion(numFun-1)->ObtenerPelicula()->toString() << endl;
 				cout << "Asientos para adultos: ........................." << bole2 << endl;
 				cout << "Asientos para ninos:   ........................." << bole1 << endl;
 				cout << "Total a pagar:         ........................." << total << endl;
@@ -363,26 +413,32 @@ int main() {
 			break;
 		case 4:
 			cout << "\t******************************************************" << endl;
-			cout << "\t*               Busaqueda de Pelicula                *" << endl;
+			cout << "\t*               Busqueda de Pelicula                *" << endl;
 			cout << "\t******************************************************" << endl;
 			cout << endl;
 			cout << "Digite el genero de la pelicula a buscar: "; cin >> gene;
 
-			if (ptrCinema->buscarSala1()->obtenerFuncion()->ObtenerPelicula()->getGenero() == gene) { //se ingresa atravez de las clases haste llegar a la de pelicula
-				cout << "Resultados: " << endl;
-				cout<< ptrCinema->obtenerElemento(1)->obtenerFuncion()->ObtenerPelicula()->toString(); // se imprime
-			}
-			else 
-				if(ptrCinema->buscarSala2()->obtenerFuncion()->ObtenerPelicula()->getGenero() == gene) {
+			do{
+				
+				if (ptrCinema->buscarSala1()->obtenerFuncion(busq)->ObtenerPelicula()->getGenero() == gene) { //se ingresa atravez de las clases haste llegar a la de pelicula
 					cout << "Resultados: " << endl;
-					cout << ptrCinema->obtenerElemento(2)->obtenerFuncion()->ObtenerPelicula()->toString();
+					cout << ptrCinema->obtenerElemento(1)->obtenerFuncion(busq)->ObtenerPelicula()->toString(); // se imprime
 				}
-				else {
-					cout << "No se encontraron Resultados!" << endl;
-				}
+				else
+					if (ptrCinema->buscarSala2()->obtenerFuncion(busq)->ObtenerPelicula()->getGenero() == gene) {
+						cout << "Resultados: " << endl;
+						cout << ptrCinema->obtenerElemento(2)->obtenerFuncion(busq)->ObtenerPelicula()->toString();
+					}
+					else {
+						cout << "No se encontraron Resultados!" << endl;
+					}
+				busq++;
+
+			} while (busq < 4);
+				
 
 
-			system("pause");
+				system("pause");
 
 			break;
 		}
@@ -393,12 +449,12 @@ int main() {
 
 	} while (opc != 5);
 	// se borran los objetos dinamicos
-	delete objPeli;
+	/*delete objPeli;
 	delete ptrFuncion;
 	delete ptrCole;
 	delete ptrSala1;
 	delete ptrSala2;
-	delete ptrCinema;
+	delete ptrCinema;*/
 
 	return 0;
 }
