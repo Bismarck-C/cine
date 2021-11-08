@@ -154,7 +154,6 @@ public:
 
 	~Funcion() {
 		objetoP->~Pelicula();
-		objetoP = NULL;
 	}
 
 	void insertarFuncion(string pHora, string pTanda, string pDia) {
@@ -173,7 +172,10 @@ public:
 	}
 
 	Pelicula* ObtenerPelicula() {// retorna la posicion de memoria del objeto de pelicula
-		return objetoP;
+		if (objetoP != NULL) {
+			return objetoP;
+		}
+			
 	
 	}
 	void setHora(string pHora) {
@@ -200,11 +202,20 @@ public:
 		return dia;
 
 	}
+	string toString() {
+		stringstream s;
+		s << ObtenerPelicula()->toString() << endl;
+		s << "Hora: " << getHora() << endl;
+		s << "Dia: " << getDia() << endl;
+		s << "Tanda: " << getTanda() << endl;
+		s << endl;
+		return s.str();
+	}
 };
 
 class Coleccion {
 private:
-	Asiento matriz[10][10];//matriz estatica
+	Asiento matriz[6][10];//matriz estatica
 	short filas;
 	short columnas;
 public:
@@ -274,11 +285,13 @@ class Sala {
 private:
 	short numeroSala;
 	string tipoSala;
-	Funcion* ptrFun;
+	Funcion* ptrFun[3];
 	Coleccion* ptrCole;
 public:
 
 	Sala(short pNum, short pSala) {
+
+
 		numeroSala = pNum;
 		if (pSala == 1) {
 			tipoSala = "VIP";
@@ -286,19 +299,23 @@ public:
 		else {
 			tipoSala = "normal";
 		}
-		
-		ptrFun = NULL;
+
+		for (short i = 0; i < 3; i++){
+			ptrFun[i] = NULL;
+
+		}
 		ptrCole = NULL;
 	}
 
 	~Sala() {
-		ptrFun->~Funcion();
+		for (short i = 0; i < 3; i++) {
+			ptrFun[i]->~Funcion();
+		}
 		ptrCole->~Coleccion();
-		ptrFun = NULL;
-		ptrCole = NULL;
 	}
 
 	void insertarCole(Coleccion* pCole) {
+
 		if (ptrCole == NULL) {
 			ptrCole = pCole;
 		}
@@ -310,17 +327,25 @@ public:
 		
 	}
 
-	void insertarFuncion(Funcion* objFun) {
-		if (ptrFun == NULL) {
-			ptrFun = objFun;
+	bool insertarFuncion(Funcion* objFun) {
+		for (short i = 0; i < 3; i++) {
+			if (ptrFun[i] == NULL) {
+				ptrFun[i] = objFun;
+				return true;
+			}
+
 		}
-		else {
-			cout << "No se puede insertar!" << endl;
+		return false;
+	}
+	Funcion* obtenerFuncion(short num) {//se retorna el puntero de funcion
+		
+		if (ptrFun[num] != NULL) {
+			return ptrFun[num];
 		}
 
-	}
-	Funcion* obtenerFuncion() {//se retorna el puntero de funcion
-		return ptrFun;
+		return NULL;
+
+		
 	}
 	Coleccion* obtenerCole() {
 		return ptrCole;
@@ -343,16 +368,23 @@ public:
 
 	string toString() {
 		stringstream t;
-		t << "Numero de sala: " << numeroSala << endl;
-		t << "Tipo de sala: " << tipoSala << endl;
-		t << "Funcion: "<<obtenerFuncion()->getTanda()<<endl;//a travez de cada funcion de retornar se ingresa a las funciones
-		t << "Hora de la Funcion: " << obtenerFuncion()->getHora() << endl;
-		t << "Dia de la Funcion: " << obtenerFuncion()->getDia() << endl;
-		t << obtenerFuncion()->ObtenerPelicula()->toString()<<endl;
-		t << "Sala: " << endl;
-		t << obtenerCole()->toString() << endl;
-
-
+		
+		for (short i = 0; i < 3; i++){
+			if (obtenerFuncion(i)) {
+				t << "******************************************************" << endl;
+				t << "Numero de sala: " << numeroSala << endl;
+				t << "Tipo de sala: " << tipoSala << endl;
+				t << "Funcion numero " << i+1 << endl;
+				t << obtenerFuncion(i)->toString();
+				t << obtenerCole()->toString() << endl;
+				t << endl;
+			}
+			else {
+				cout << " ";
+			}
+			
+			
+		}
 		return t.str();
 	}
 	
@@ -378,8 +410,6 @@ public:
 		else if (sala2 != NULL) {
 			sala2->~Sala();
 		}
-		sala1 = NULL;
-		sala2 = NULL;
 	}
 
 	bool insertar(Sala* ObjSala, short pNUm) {
