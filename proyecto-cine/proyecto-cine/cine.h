@@ -24,7 +24,7 @@ public:
 		pais = " ";
 		tipoPublico = "";
 		anio = 0;
-		
+
 
 	}
 	void insertarPelicula(string pNom, string pGenero, string pClasi, string pDimen, string pPais, short pAnio, short pTipo) {//por parametros
@@ -36,7 +36,7 @@ public:
 		anio = pAnio;
 		if (pTipo == 1) {
 			tipoPublico = "adultos";
-			
+
 		}
 		else {
 			tipoPublico = "ninos";
@@ -109,6 +109,29 @@ public:
 
 		return s.str();
 	}
+	class Asiento {
+		string estado;
+	public:
+		Asiento() {
+			estado = "O";
+		}
+		~Asiento() {
+
+		}
+		void setEstado(string pEstado) {
+			estado = pEstado;
+		}
+
+		string getEstado() {
+			return estado;
+		}
+		string toString() {
+			stringstream a;
+			a << estado;
+			return a.str();
+		}
+
+	};
 
 
 
@@ -136,7 +159,6 @@ public:
 	}
 
 };
-
 class Funcion {
 private:
 	Pelicula* objetoP; //puntero a peliculas
@@ -146,41 +168,60 @@ private:
 
 public:
 	Funcion() {
-		objetoP = NULL;
 		hora = "";
 		dia = "";
 		tanda = "";
 	}
 
 	~Funcion() {
-		objetoP->~Pelicula();
+
 	}
 
-	void insertarFuncion(string pHora, string pTanda, string pDia) {
-		
-		hora = pHora;
-		tanda = pTanda;
-		dia = pDia;
-	}
-	void insertarPelicula(Pelicula* pObj) {
-		if (objetoP == NULL) {
-			objetoP = pObj;
+	void insertarFuncion() {
+		string auxTanda, auxHora, auxDia;
+		short tan;
+		do {
+
+			cout << "Digite la tanda: " << endl;
+			cout << "1. manana " << endl;
+			cout << "2. tarde " << endl;
+			cout << "3. noche " << endl;
+			cout << "Opcion: "; cin >> tan;
+		} while (tan > 3);
+
+		switch (tan)
+		{
+		case 1:
+			auxTanda = "manana";
+			break;
+		case 2:
+			auxTanda = "tarde";
+			break;
+		case 3:
+			auxTanda = "noche";
+			break;
 		}
-		else {
-			cout << "No se puede insertar pelicula!" << endl;
-		}
+		cout << endl;
+
+		cout << "Digite la hora de la Funcion: "; cin >> auxHora;
+		cout << "Digite el dia de la funcion: "; cin >> auxDia;
+		setTanda(auxTanda);
+		setDia(auxDia);
+		setHora(auxHora);
+		cout << endl;
+
+
 	}
 
-	Pelicula* ObtenerPelicula() {// retorna la posicion de memoria del objeto de pelicula
-		if (objetoP != NULL) {
-			return objetoP;
-		}
-			
-	
+	Pelicula* getPelicula() {// retorna la posicion de memoria del objeto de pelicula
+		return objetoP;
+
+
+
 	}
 	void setHora(string pHora) {
 		hora = pHora;
-	
+
 	}
 	void setTanda(string pTanda) {
 		tanda = pTanda;
@@ -192,7 +233,7 @@ public:
 	}
 	string getHora() {
 		return hora;
-	
+
 	}
 	string getTanda() {
 		return tanda;
@@ -202,9 +243,13 @@ public:
 		return dia;
 
 	}
+	void insertarPeli(Pelicula* objPeli) {
+		objetoP = objPeli;
+
+	}
 	string toString() {
 		stringstream s;
-		s << ObtenerPelicula()->toString() << endl;
+		s << getPelicula()->toString() << endl;
 		s << "Hora: " << getHora() << endl;
 		s << "Dia: " << getDia() << endl;
 		s << "Tanda: " << getTanda() << endl;
@@ -212,36 +257,35 @@ public:
 		return s.str();
 	}
 };
-
 class Coleccion {
 private:
-	Asiento matriz[6][10];//matriz estatica
-	short filas;
-	short columnas;
+	Asiento*** matriz;//matriz estatica
 public:
 	Coleccion() {
-		filas = 6;
-		columnas = 10;
+		matriz = new Asiento * *[6];
+		for (short i = 0; i < 6; i++) {
+			matriz[i] = new Asiento * [10];
+
+		}
+		for (short i = 0; i < 6; i++) {
+			for (short j = 0; j < 10; j++) {
+				matriz[i][j] = new Asiento;
+
+			}
+		}
+
 	}
-	
+
 	~Coleccion() {
-		for (short i = 0; i < filas; i++) {
-			for (short j = 0; j < columnas; j++) {
-				matriz[i][j].~Asiento();// se borran los asientos
-
+		for (short i = 0; i < 2; i++) {
+			for (short j = 0; j < 6; j++) {
+				delete matriz[i][j];//apartamentos
 			}
-		}
-	}
+			delete matriz[i];//columnas
 
-	void insertarAsientos(Asiento pAsiento) {
-		
-		
-		for (short i = 0; i < filas; i++) {
-			for (short j = 0; j < columnas; j++) {
-				matriz[i][j] = pAsiento; //se insertan los asientos
-				
-			}
+
 		}
+		delete[] matriz;
 	}
 	string toString() {
 		stringstream m;
@@ -250,14 +294,14 @@ public:
 		m << "------------------------Pantalla-----------------------" << endl;
 		m << endl;
 		m << "     " << "(1)  " << "(2)  " << "(3)  " << "(4)  " << "(5)  " << "(6)  " << "(7)  " << "(8)  " << "(9)  " << "(10)  " << endl;
-		
-		
-		for (short i = 0; i < filas; i++) {
+
+
+		for (short i = 0; i < 6; i++) {
 			letras[i] = i + 65; // en este valor se muestran las letras A, B, C...
 			m << endl;
 			m << "[" << letras[i] << "]" << "  ";
-			for (short j = 0; j < columnas; j++) {
-				m << "[" << matriz[i][j].toString() << "]" << "  ";
+			for (short j = 0; j < 10; j++) {
+				m << "[" << matriz[i][j]->toString() << "]" << "  ";
 			}
 			m << endl;
 
@@ -268,13 +312,25 @@ public:
 
 	bool reservar(short pFill, short pColumm) {
 		pColumm = pColumm - 1;
-		if (matriz[pFill][pColumm].getEstado() == "O") {
-			matriz[pFill][pColumm].setEstado("X");
+		if (matriz[pFill][pColumm]->getEstado() == "O") {
+			matriz[pFill][pColumm]->setEstado("X");
 			return true;
 
 		}
 		else {
 			return false;
+		}
+	}
+	void reiniciarMatriz() {
+		for (short i = 0; i < 6; i++) {
+			for (short j = 0; j < 10; j++) {
+				if (matriz[i][j]->getEstado() == "X") {
+					matriz[i][j]->setEstado("O");
+
+				}
+
+
+			}
 		}
 	}
 
@@ -285,69 +341,56 @@ class Sala {
 private:
 	short numeroSala;
 	string tipoSala;
-	Funcion* ptrFun[3];
+	Funcion** ptrFun;
 	Coleccion* ptrCole;
 public:
 
-	Sala(short pNum, short pSala) {
-
-
-		numeroSala = pNum;
-		if (pSala == 1) {
-			tipoSala = "VIP";
-		}
-		else {
-			tipoSala = "normal";
-		}
-
-		for (short i = 0; i < 3; i++){
+	Sala() {
+		ptrFun = new Funcion * [3];
+		for (short i = 0; i < 3; i++) {
 			ptrFun[i] = NULL;
 
 		}
-		ptrCole = NULL;
+
+		ptrCole = new Coleccion;
 	}
 
 	~Sala() {
 		for (short i = 0; i < 3; i++) {
-			ptrFun[i]->~Funcion();
+			delete ptrFun[i];
 		}
-		ptrCole->~Coleccion();
+		delete[] ptrFun;
+
+		delete ptrCole;
 	}
 
-	void insertarCole(Coleccion* pCole) {
+	void insertarFuncion(Funcion* objFun) {
+		short cantidad;
 
-		if (ptrCole == NULL) {
-			ptrCole = pCole;
+		cout << "Digite el numero de funcion: "; cin >> cantidad;
+		if (cantidad < 4 && ptrFun[cantidad - 1] == NULL) {
+			ptrFun[cantidad - 1] = objFun;
+			cout << "Se inserto correctamente!" << endl;
+
 		}
 		else {
-			cout << "No se puede insertar!" << endl;
+			cout << "El espacio ya esta en uso o no se permiten mas funciones" << endl;
 		}
-		
 
-		
+
+
+
 	}
 
-	bool insertarFuncion(Funcion* objFun) {
-		for (short i = 0; i < 3; i++) {
-			if (ptrFun[i] == NULL) {
-				ptrFun[i] = objFun;
-				return true;
-			}
+	Funcion* getFuncion(short num) {//se retorna el puntero de funcion
 
-		}
-		return false;
-	}
-	Funcion* obtenerFuncion(short num) {//se retorna el puntero de funcion
-		
 		if (ptrFun[num] != NULL) {
 			return ptrFun[num];
 		}
-
 		return NULL;
 
-		
 	}
-	Coleccion* obtenerCole() {
+	Coleccion* getCole() {
 		return ptrCole;
 	}
 
@@ -365,60 +408,29 @@ public:
 	string getTipoSala() {
 		return tipoSala;
 	}
+	bool insertarSala(short pNum) {
+		short opc;
+		string tipoSala;
 
-	string toString() {
-		stringstream t;
-		
-		for (short i = 0; i < 3; i++){
-			if (obtenerFuncion(i)) {
-				t << "******************************************************" << endl;
-				t << "Numero de sala: " << numeroSala << endl;
-				t << "Tipo de sala: " << tipoSala << endl;
-				t << "Funcion numero " << i+1 << endl;
-				t << obtenerFuncion(i)->toString();
-				t << obtenerCole()->toString() << endl;
-				t << endl;
-			}
-			else {
-				cout << " ";
-			}
-			
-			
+		cout << "Digite el tipo de sala: " << endl;
+		cout << "[1]............VIP" << endl;
+		cout << "[2]............Normal" << endl;
+		cout << "Opcion: ";  cin >> opc;
+		if (opc == 1) {
+			tipoSala = "VIP";
 		}
-		return t.str();
-	}
-	
-};
-
-class Cinema {
-private:
-	Sala* sala1;
-	Sala* sala2;
-public:
-	
-
-	Cinema() {
-		sala1 = NULL;
-		sala2 = NULL;
-
-	}
-
-	~Cinema() {
-		if (sala1 != NULL) {
-			sala1->~Sala();
+		else {
+			tipoSala = "normal";
 		}
-		else if (sala2 != NULL) {
-			sala2->~Sala();
-		}
-	}
 
-	bool insertar(Sala* ObjSala, short pNUm) {
-		if (pNUm == 1 && sala1 == NULL) {
-			sala1 = ObjSala;
+		if (pNum == 1) {
+			setNumSala(pNum);
+			setTipoSala(tipoSala);
 			return true;
 		}
-		else if(pNUm == 2 && sala2 == NULL){
-			sala2 = ObjSala;
+		else if (pNum == 2) {
+			setNumSala(pNum);
+			setTipoSala(tipoSala);
 			return true;
 		}
 		else {
@@ -428,6 +440,59 @@ public:
 	}
 
 	string toString() {
+		stringstream t;
+
+		for (short i = 0; i < 3; i++) {
+			if (getFuncion(i)) {
+				t << "******************************************************" << endl;
+				t << "Numero de sala: " << numeroSala << endl;
+				t << "Tipo de sala: " << tipoSala << endl;
+				t << "Funcion numero " << i + 1 << endl;
+				t << getFuncion(i)->toString();
+				t << getCole()->toString() << endl;
+				t << endl;
+			}
+			else {
+				cout << " ";
+			}
+
+
+		}
+		return t.str();
+	}
+	void mostrarFuncion(short pNum) {
+		cout << "******************************************************" << endl;
+		cout << "Numero de sala: " << numeroSala << endl;
+		cout << "Tipo de sala: " << tipoSala << endl;
+		cout << "Funcion numero " << pNum + 1 << endl;
+		cout << getFuncion(pNum)->toString();
+		cout << getCole()->toString() << endl;
+		cout << endl;
+
+	}
+
+};
+
+class Cinema {
+private:
+	Sala* sala1;
+	Sala* sala2;
+public:
+
+
+	Cinema() {
+		sala1 = new Sala;
+		sala2 = new Sala;
+
+	}
+
+	~Cinema() {
+		delete sala1;
+		delete sala2;
+	}
+
+
+	string toString() {
 		stringstream b;
 		if (sala1 != NULL) {
 			b << sala1->toString() << endl;
@@ -435,14 +500,14 @@ public:
 		else {
 			b << "Sala 1 no deponible por el momento o no se han insertado funciones!" << endl;
 		}
-			
+
 		if (sala2 != NULL) {
 			b << sala2->toString() << endl;
 		}
 		else {
 			b << "Sala 2 no deponible por el momento o no se han insertado funciones!" << endl;
 		}
-		
+
 
 
 
@@ -450,19 +515,21 @@ public:
 	}
 
 
-	Sala* obtenerElemento(short pNum) {
+	Sala* getSalas(short pNum) {
+
 		if (pNum == 1 && sala1 != NULL) {
 			return sala1;
-		}else
-			if (pNum == 2 && sala1 != NULL) {
+		}
+		else
+			if (pNum == 2 && sala2 != NULL) {
 				return sala2;
 			}
 			else {
 				return NULL;
 			}
-		
+
 	}
-	Sala* buscarSala1() {
+	Sala* getSala1() {
 		if (sala1 != NULL) {
 			return sala1;
 		}
@@ -472,9 +539,9 @@ public:
 
 
 	}
-	Sala* buscarSala2() {
-		if (sala1 != NULL) {
-			return sala1;
+	Sala* getSala2() {
+		if (sala2 != NULL) {
+			return sala2;
 		}
 		else {
 			return NULL;
@@ -484,8 +551,6 @@ public:
 
 
 };
-
-
 
 
 
