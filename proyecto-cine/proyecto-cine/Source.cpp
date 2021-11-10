@@ -234,34 +234,17 @@ int main() {
 				cout << endl;
 				cout << endl;
 				cout << "Digite el numero de funcion a alegir: "; cin >> numFun;
-				/*El precio del tiquete depende del tipo de público, y de la sala; si el tipo es niños(as) y la sala regular, el
-			precio del tiquete es ₵3000, si el tipo es niños(as) y la sala VIP, el precio del tiquete es ₵4500. Si el tipo es
-			adultos y la sala regular, el precio del tiquete es ₵5000, si el tipo es adultos y la sala VIP, el precio del tiquete
-			es ₵6500*/
-				system("cls");
-				cout << "Esta pelicula es para: " << ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() << endl;
-				ptrCinema->getSalas(sala)->mostrarFuncion(numFun - 1);
-				if (ptrCinema->getSalas(sala)->getTipoSala() == "normal" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "ninos") {
-					boletosNi = 3000;
-					boletoAdulto = 3500; //se crearon nuevos precios
-					cout << "\t******************************************************" << endl;
-					cout << "\t*                Apta para todo publico              *" << endl;
-					cout << "\t******************************************************" << endl;
-					cout << endl;
-					cout << "Valor de la entrada adulto: " << boletoAdulto << endl;
-					cout << "Valor de la entrada ninos: " << boletosNi << endl;
-					cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
-					cout << "Digite cuantos boletos adulto: "; cin >> bole2;
-					totalBoletos = bole1 + bole2;
-					total = (boletosNi * bole1) + (bole2 * boletoAdulto);//se calculan el total a pagar
-
-
-
-				}
-				else
-					if (ptrCinema->getSalas(sala)->getTipoSala() == "VIP" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "ninos") {
-						boletosNi = 4500;
-						boletoAdulto = 4800;
+					/*El precio del tiquete depende del tipo de público, y de la sala; si el tipo es niños(as) y la sala regular, el
+					precio del tiquete es ₵3000, si el tipo es niños(as) y la sala VIP, el precio del tiquete es ₵4500. Si el tipo es
+					adultos y la sala regular, el precio del tiquete es ₵5000, si el tipo es adultos y la sala VIP, el precio del tiquete
+					es ₵6500*/
+				if (numFun == activador) {
+					system("cls");
+					cout << "Esta pelicula es para: " << ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() << endl;
+					ptrCinema->getSalas(sala)->mostrarFuncion(numFun - 1);
+					if (ptrCinema->getSalas(sala)->getTipoSala() == "normal" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "ninos") {
+						boletosNi = 3000;
+						boletoAdulto = 3500; //se crearon nuevos precios
 						cout << "\t******************************************************" << endl;
 						cout << "\t*                Apta para todo publico              *" << endl;
 						cout << "\t******************************************************" << endl;
@@ -271,99 +254,122 @@ int main() {
 						cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
 						cout << "Digite cuantos boletos adulto: "; cin >> bole2;
 						totalBoletos = bole1 + bole2;
-						total = (boletosNi * bole1) + (bole2 * boletoAdulto);
+						total = (boletosNi * bole1) + (bole2 * boletoAdulto);//se calculan el total a pagar
 
 
 
 					}
 					else
-						if (ptrCinema->getSalas(sala)->getTipoSala() == "normal" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "adultos") {
-							boletoAdulto = 5000;
+						if (ptrCinema->getSalas(sala)->getTipoSala() == "VIP" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "ninos") {
+							boletosNi = 4500;
+							boletoAdulto = 4800;
 							cout << "\t******************************************************" << endl;
-							cout << "\t*                Apta solo para aultos               *" << endl;
+							cout << "\t*                Apta para todo publico              *" << endl;
 							cout << "\t******************************************************" << endl;
 							cout << endl;
-							cout << "Valor de la entrada: " << boletoAdulto << endl;
-							cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
-							totalBoletos = bole2;
-							total = totalBoletos * boletoAdulto;
+							cout << "Valor de la entrada adulto: " << boletoAdulto << endl;
+							cout << "Valor de la entrada ninos: " << boletosNi << endl;
+							cout << "Digite cuantos boletos para ninos: "; cin >> bole1;
+							cout << "Digite cuantos boletos adulto: "; cin >> bole2;
+							totalBoletos = bole1 + bole2;
+							total = (boletosNi * bole1) + (bole2 * boletoAdulto);
+
+
+
+						}
+						else
+							if (ptrCinema->getSalas(sala)->getTipoSala() == "normal" && ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->getTipoPublico() == "adultos") {
+								boletoAdulto = 5000;
+								cout << "\t******************************************************" << endl;
+								cout << "\t*                Apta solo para aultos               *" << endl;
+								cout << "\t******************************************************" << endl;
+								cout << endl;
+								cout << "Valor de la entrada: " << boletoAdulto << endl;
+								cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
+								totalBoletos = bole2;
+								total = totalBoletos * boletoAdulto;
+							}
+							else {
+								boletoAdulto = 6500;
+								cout << "\t******************************************************" << endl;
+								cout << "\t*                Apta solo para aultos               *" << endl;
+								cout << "\t******************************************************" << endl;
+								cout << endl;
+								cout << "Valor de la entrada: " << boletoAdulto << endl;
+								cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
+								totalBoletos = bole2;
+								total = totalBoletos * boletoAdulto;
+							}
+					ptrCinema->getSalas(sala)->getCole()->toString();
+
+					do {
+						cout << "Digite letra de la Fila: "; cin >> letra;// se verifica la letra para mandar un numero de fila segun cada letra
+						switch (letra) {
+						case 'A': case 'a':
+							fila = 0;
+							break;
+						case 'B': case 'b':
+							fila = 1;
+							break;
+						case 'C':case 'c':
+							fila = 2;
+							break;
+						case 'D': case 'd':
+							fila = 3;
+							break;
+						case 'E':case 'e':
+							fila = 4;
+							break;
+						case 'F': case 'f':
+							fila = 5;
+							break;
+
+						default:
+							break;
+						}
+						cout << "Digite la columna: "; cin >> colum;
+						if (ptrCinema->getSalas(sala)->getCole()->reservar(fila, colum)) {
+							cout << "Reserva exitosa" << endl;
+							contador++; //cuenta el numero de veces que se a reservado
 						}
 						else {
-							boletoAdulto = 6500;
-							cout << "\t******************************************************" << endl;
-							cout << "\t*                Apta solo para aultos               *" << endl;
-							cout << "\t******************************************************" << endl;
-							cout << endl;
-							cout << "Valor de la entrada: " << boletoAdulto << endl;
-							cout << "Digite cuantos boletos para adulto: "; cin >> bole2;
-							totalBoletos = bole2;
-							total = totalBoletos * boletoAdulto;
+							cout << "El asiento ya esta reservado, digite otro!" << endl;
+
 						}
-				ptrCinema->getSalas(sala)->getCole()->toString();
+					} while (contador != totalBoletos);// se verifica que el numero de veces concuerde con los boletos
+					contador = 0;
+					system("cls");
+					cout << "\t******************************************************" << endl;
+					cout << "\t*                     Tiqueteria                     *" << endl;
+					cout << "\t******************************************************" << endl;
 
-				do {
-					cout << "Digite letra de la Fila: "; cin >> letra;// se verifica la letra para mandar un numero de fila segun cada letra
-					switch (letra) {
-					case 'A': case 'a':
-						fila = 0;
-						break;
-					case 'B': case 'b':
-						fila = 1;
-						break;
-					case 'C':case 'c':
-						fila = 2;
-						break;
-					case 'D': case 'd':
-						fila = 3;
-						break;
-					case 'E':case 'e':
-						fila = 4;
-						break;
-					case 'F': case 'f':
-						fila = 5;
-						break;
-
-					default:
-						break;
-					}
-					cout << "Digite la columna: "; cin >> colum;
-					if (ptrCinema->getSalas(sala)->getCole()->reservar(fila, colum)) {
-						cout << "Reserva exitosa" << endl;
-						contador++; //cuenta el numero de veces que se a reservado
-					}
-					else {
-						cout << "El asiento ya esta reservado, digite otro!" << endl;
-
-					}
-				} while (contador != totalBoletos);// se verifica que el numero de veces concuerde con los boletos
-				contador = 0;
-				system("cls");
-				cout << "\t******************************************************" << endl;
-				cout << "\t*                     Tiqueteria                     *" << endl;
-				cout << "\t******************************************************" << endl;
-
-				cout << endl;
-				cout << endl;
-				cout << "\t******************************************************" << endl;
-				cout << "\t*                     Factura                        *" << endl;
-				cout << "\t******************************************************" << endl;
-				cout << endl;
-				cout << "ASIENTO SELECIONADOS: " << endl;
-				cout << ptrCinema->getSalas(sala)->getCole()->toString();
-				cout << endl;
-				cout << endl;
-				cout << ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->toString() << endl;
-				cout << "Asientos para adultos: ........................." << bole2 << endl;
-				cout << "Asientos para ninos:   ........................." << bole1 << endl;
-				cout << "Total a pagar:         ........................." << total << endl;
-				bole1 = 0;
-				bole2 = 0;
-				system("pause");
+					cout << endl;
+					cout << endl;
+					cout << "\t******************************************************" << endl;
+					cout << "\t*                     Factura                        *" << endl;
+					cout << "\t******************************************************" << endl;
+					cout << endl;
+					cout << "ASIENTO SELECIONADOS: " << endl;
+					cout << ptrCinema->getSalas(sala)->getCole()->toString();
+					cout << endl;
+					cout << endl;
+					cout << ptrCinema->getSalas(sala)->getFuncion(numFun - 1)->getPelicula()->toString() << endl;
+					cout << "Asientos para adultos: ........................." << bole2 << endl;
+					cout << "Asientos para ninos:   ........................." << bole1 << endl;
+					cout << "Total a pagar:         ........................." << total << endl;
+					bole1 = 0;
+					bole2 = 0;
+					system("pause");
+				}
+				else {
+					cout << "No se pueden vender boletos para esta tanda!" << endl;
+				}
+				contadorTanda = 0;
 			}
 			else {
-				cout << "No se pueden vender boletos para esta tanda!" << endl;
+				cout << " " << endl;
 			}
-			contadorTanda = 0;
+				
 
 			
 
@@ -399,11 +405,11 @@ int main() {
 
 
 
-			system("pause");
+			
 
 			break;
 		}
-
+		system("pause");
 
 
 
