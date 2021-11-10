@@ -250,6 +250,7 @@ public:
 	string toString() {
 		stringstream s;
 		s << getPelicula()->toString() << endl;
+		s << "Funcion:" << endl;
 		s << "Hora: " << getHora() << endl;
 		s << "Dia: " << getDia() << endl;
 		s << "Tanda: " << getTanda() << endl;
@@ -370,7 +371,7 @@ public:
 		cout << "Digite el numero de funcion: "; cin >> cantidad;
 		if (cantidad < 4 && ptrFun[cantidad - 1] == NULL) {
 			ptrFun[cantidad - 1] = objFun;
-			cout << "Se inserto correctamente!" << endl;
+			
 
 		}
 		else {
